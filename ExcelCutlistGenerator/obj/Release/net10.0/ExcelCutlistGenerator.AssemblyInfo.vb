@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("ExcelCutlistGenerator"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Release"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+311bcd91cf9763bf1cee7f32254d01c6e0654867"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04aed626bc38065ac39ffdbfd6a67c6985eed4f7"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("ExcelCutlistGenerator"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("ExcelCutlistGenerator"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")> 

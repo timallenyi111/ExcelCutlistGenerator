@@ -5,11 +5,19 @@ Imports ClosedXML.Excel
 Imports Excel = Microsoft.Office.Interop.Excel
 
 Module Program
+
     Sub Main(args As String())
         Console.WriteLine("Reading Data From File...")
-        Globals.inPath = args(0) ' get the input path from the command line arguments
+
+        'used for debugging so I don't have to run the program through excel every time
+        If debugMode Then
+            Globals.inPath = "C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\CutlistTestSheet.xlsx"
+        Else
+            Globals.inPath = args(0) ' get the input path from the command line arguments
+        End If
         GetOutputPath() ' set the output path based on the input path
         Globals.bladeWidth = 0.1875 'inches
+
         Dim partList As New List(Of partObject)
         Dim uniqueMaterialsList As New List(Of String) 'list of the unique material types from the part list
         Dim stockList As New List(Of stockObject)
@@ -26,6 +34,9 @@ Module Program
             End Using
         End Using
 
+        Console.WriteLine(vbCrLf & "Checking for Duplicate Parts...")
+        partList = CheckForDuplicateParts(partList)
+
         Console.WriteLine("Generating Cutlist Nests...")
         'generate the nest list
         Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList, uniqueMaterialsList) 'list of nests, each nest is a list of sticks        
@@ -39,8 +50,8 @@ Module Program
         WriteOutputNewFile(nestList)
 
         Console.WriteLine("Nesting Complete.")
-        'Console.WriteLine("Press any key to exit.")
-        'Console.ReadKey()
+        Console.WriteLine("Press any key to exit.")
+        Console.ReadKey()
 
 
     End Sub
@@ -55,7 +66,7 @@ Module Program
         For row As Integer = 2 To partLastRow ' Assuming the first row is headers
             Dim partNumber = partworksheet.Cell(row, 1).GetString().Trim()
             Dim lengthFrac = partworksheet.Cell(row, 2).GetString().Trim()
-            Dim lengthDecimal = inchFracToDecimal(lengthFrac)
+            Dim lengthDecimal = InchFracToDecimal(lengthFrac)
             Dim qty = partworksheet.Cell(row, 3).GetValue(Of Integer)() ' Assuming quantities are in the third column
             Dim material = partworksheet.Cell(row, 4).GetString().Trim() ' Assuming material types are in the fourth column
             If uniqueMaterials.Contains(material) = False Then 'add to unique materials list
@@ -83,7 +94,7 @@ Module Program
         Return stockList
     End Function
 
-    Function inchFracToDecimal(frac As String) As Double
+    Function InchFracToDecimal(frac As String) As Double
         If frac.Contains("/") = False Then
             ' No fraction, just return the integer value
             Return CDbl(frac)
@@ -225,7 +236,7 @@ Module Program
             Next
             Console.WriteLine("Number of Page Breaks: " & ws.PageSetup.RowBreaks.Count)
 
-            ws.Columns("A:B").AdjustToContents()
+            ws.Columns("A:Z").AdjustToContents()
             wb.SaveAs(Globals.outPath)
 
 
@@ -287,12 +298,34 @@ Module Program
     End Sub
 
     Sub InsertPartRow(ByRef ws As IXLWorksheet, ByRef currentRow As Integer, ByRef part As partObject)
+
         ws.Cell(currentRow, 1).Value = part.PartNumber
         ws.Cell(currentRow, 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin
         ws.Cell(currentRow, 1).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center
         ws.Cell(currentRow, 2).Value = part.Length
         ws.Cell(currentRow, 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin
         ws.Cell(currentRow, 2).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center
+        'check for duplicate part flags and add warnings if necessary
+        If part.WarningList.Count > 0 Then
+            Dim colIndex As Integer = 3 'start adding warnings in column C
+            For Each warning As String In part.WarningList
+                ws.Cell(currentRow, colIndex).Value = warning
+                ws.Cell(currentRow, colIndex).Style.Font.FontColor = XLColor.Red
+                ws.Cell(currentRow, colIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center
+                colIndex += 1
+            Next
+            If part.DuplicateDifMaterial Or part.DuplicateDifLength = True Then
+                'this is a part number with different properties so create a strong warning
+                ws.Range(ws.Cell(currentRow, 1), ws.Cell(currentRow, colIndex - 1)).Style.Fill.BackgroundColor = XLColor.Yellow
+                ws.Range(ws.Cell(currentRow, 1), ws.Cell(currentRow, colIndex - 1)).Style.Font.FontColor = XLColor.Red
+                ws.Range(ws.Cell(currentRow, 1), ws.Cell(currentRow, colIndex - 1)).Style.Font.Bold = True
+            Else
+                'this is a duplicate part number with identical properties so only use a weak warning
+                ws.Range(ws.Cell(currentRow, 1), ws.Cell(currentRow, colIndex - 1)).Style.Fill.BackgroundColor = XLColor.LightYellow
+            End If
+
+        End If
+
     End Sub
 
     Function GetExcel(ByRef outDoc As String) As Excel.Application
@@ -414,5 +447,49 @@ Module Program
         Dim outputPath As String = inPath.Insert(inPath.LastIndexOf("."), newFilePostfix)
         Globals.outPath = outputPath
     End Sub
+
+    Function CheckForDuplicateParts(ByRef partList As List(Of partObject)) As List(Of partObject)
+        Dim uniquePartList As New List(Of (Integer, partObject))
+        Dim partIndex As Integer = 0 'used for keeping track of unique parts in the part list so we can go back and add the warning to the original part
+        For Each part As partObject In partList
+            Dim isDuplicate As Boolean = False
+            'search for a duplicate part in the unique part list
+            For Each uniquePart As (Integer, partObject) In uniquePartList
+                If part.PartNumber = uniquePart.Item2.PartNumber And part.Length = uniquePart.Item2.Length And part.Stock = uniquePart.Item2.Stock Then
+                    'identical parts found with same length and material (probably a part used in different assemblies)
+                    'assign the duplicate flag to the current part
+                    part.DuplicateIdentical = True
+                    partList(uniquePart.Item1).DuplicateIdentical = True 'assign the duplicate flag to the original part
+                    isDuplicate = True
+                    Exit For
+                ElseIf part.PartNumber = uniquePart.Item2.PartNumber And part.Length <> uniquePart.Item2.Length Then
+                    'an identical part number with a different length was found (this is probably user error)
+                    part.DuplicateDifLength = True
+                    partList(uniquePart.Item1).DuplicateDifLength = True 'assign the duplicate flag to the original part
+                    isDuplicate = True
+                    Exit For
+                ElseIf part.PartNumber = uniquePart.Item2.PartNumber And part.Stock <> uniquePart.Item2.Stock Then
+                    'an identical part number with a different material was found (this is probably user error)
+                    part.DuplicateDifMaterial = True
+                    partList(uniquePart.Item1).DuplicateDifMaterial = True 'assign the duplicate flag to the original part
+                    isDuplicate = True
+                    Exit For
+                End If
+            Next
+            If isDuplicate = False Then
+                uniquePartList.Add((partIndex, part))
+            Else
+                'this is a duplicate part, output the warning to the console
+                Console.WriteLine(vbCrLf & "Duplicate part found: " & part.PartNumber)
+                Console.WriteLine(vbTab & "Identical Length and Material: " & part.DuplicateIdentical)
+                Console.WriteLine(vbTab & "Different Length: " & part.DuplicateDifLength)
+                Console.WriteLine(vbTab & "Different Material: " & part.DuplicateDifMaterial)
+            End If
+            partIndex += 1
+        Next
+
+        'return part list with adjusted duplicate flags
+        Return partList
+    End Function
 
 End Module

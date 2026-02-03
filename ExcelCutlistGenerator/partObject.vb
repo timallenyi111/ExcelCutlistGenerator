@@ -4,6 +4,10 @@
     Dim _length As Double
     Dim _material As String
     Dim _remainingQty As Integer
+    Dim _duplicateIdentical As Boolean = False
+    Dim _duplicateDifLength As Boolean = False
+    Dim _duplicateDifMaterial As Boolean = False
+    Dim _warningList As New List(Of String)
 
     Public Sub New(ByRef partNumber As String, ByRef qty As Integer, ByRef length As Double, ByRef material As String)
         _partNumber = partNumber
@@ -53,5 +57,53 @@
             Throw New Exception("Cannot reduce quantity below zero.")
         End If
     End Sub
+
+    Public Property DuplicateIdentical As Boolean
+        Get
+            Return _duplicateIdentical
+        End Get
+        Set(value As Boolean)
+            _duplicateIdentical = value
+            If value = True Then
+                AddWarning("Duplicate Part Numbers with identical properties")
+            End If
+        End Set
+    End Property
+
+    Public Property DuplicateDifLength As Boolean
+        Get
+            Return _duplicateDifLength
+        End Get
+        Set(value As Boolean)
+            _duplicateDifLength = value
+            If value = True Then
+                AddWarning("Duplicate Part Number with Different Length")
+            End If
+        End Set
+    End Property
+
+    Public Property DuplicateDifMaterial As Boolean
+        Get
+            Return _duplicateDifMaterial
+        End Get
+        Set(value As Boolean)
+            _duplicateDifMaterial = value
+            If value = True Then
+                AddWarning("Duplicate Part Number with Different Material")
+            End If
+        End Set
+    End Property
+
+    Public ReadOnly Property WarningList As List(Of String)
+        Get
+            Return _warningList
+        End Get
+    End Property
+
+    Private Sub AddWarning(warning As String)
+        _warningList.Add(warning)
+    End Sub
+
+
 
 End Class
