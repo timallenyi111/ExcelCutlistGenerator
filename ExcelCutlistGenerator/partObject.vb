@@ -8,14 +8,17 @@
     Dim _duplicateDifLength As Boolean = False
     Dim _duplicateDifMaterial As Boolean = False
     Dim _warningList As New List(Of String)
-    'Dim _end1Angle As Double = 0.0
-    'Dim _end2Angle As Double = 0.0
+    Dim _end1Angle As Integer = 0
+    Dim _end2Angle As Integer = 0
+    Dim _cutOrientation As Integer = 0
 
     Public Sub New(ByRef partNumber As String, ByRef qty As Integer, ByRef length As Double, ByRef material As String)
         _partNumber = partNumber
         _qty = qty
+        _remainingQty = qty
         _length = length
         _material = material
+
     End Sub
     ReadOnly Property PartNumber As String
         Get
@@ -44,7 +47,7 @@
 
     ReadOnly Property RemainingQty As Integer
         Get
-            Return _qty
+            Return _remainingQty
         End Get
     End Property
 
@@ -53,13 +56,48 @@
     ''' </summary>
     ''' <param name="amount"></param>
     Public Sub ReduceRemainingQty(ByRef amount As Integer)
-        If amount <= _qty Then
-            _qty -= amount
+        If amount <= _remainingQty Then
+            _remainingQty -= amount
         Else
             Throw New Exception("Cannot reduce quantity below zero.")
         End If
     End Sub
 
+    Public Property End1Angle As Integer
+        Get
+            Return _end1Angle
+        End Get
+        Set(value As Integer)
+            _end1Angle = value
+        End Set
+    End Property
+
+    Public Property End2Angle As Integer
+        Get
+            Return _end2Angle
+        End Get
+        Set(value As Integer)
+            _end2Angle = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' The orienation the material needs to be cut in the saw |
+    ''' 0 doesn't matter |
+    ''' 1 is width side down |
+    ''' 2 is height side down 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property CutOrientation As Integer
+        Get
+            Return _cutOrientation
+        End Get
+        Set(value As Integer)
+            _cutOrientation = value
+        End Set
+    End Property
+
+#Region "Warning Properties and Subs"
     Public Property DuplicateIdentical As Boolean
         Get
             Return _duplicateIdentical
@@ -106,6 +144,7 @@
         _warningList.Add(warning)
     End Sub
 
+#End Region
 
 
 End Class

@@ -1,0 +1,118 @@
+
+<modelExtract xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<header>
+<modelFilename>C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model.dwg</modelFilename>
+<modelUnits>
+<length precision="44" representation="1" unit="20"/>
+<area precision="240" representation="3001" unit="3001"/>
+<angle precision="81" representation="2006" unit="2006"/>
+<weight precision="121" representation="1010" unit="1005"/></modelUnits>
+<extractUnits>
+<length precision="4" representation="3" unit="3"/>
+<area precision="-1" representation="-1" unit="-1"/>
+<angle precision="84" representation="2006" unit="2006"/>
+<weight precision="112" representation="1009" unit="1009"/></extractUnits>
+<project/>
+<extractId>MyModel.ModelExtracts.Key</extractId>
+<updateIndex id="MyModel.ModelExtracts.State"/></header>
+<selection key="0">
+<base>AllMainparts</base>
+<DerivedDocuments>1</DerivedDocuments></selection>
+<tables>
+<profileSection key="AISC 15.0 W Shape#@§@#W12X26" sectionClass="I">
+<weightPerMeter>38692.262440</weightPerMeter>
+<paintAreaPerMeter>1254760.000000</paintAreaPerMeter></profileSection></tables>
+<parts>
+<mainpart id="3B2" num="B#internal1" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="3B0" basepart="314" id="3AF">
+<assemblyWeight>265676.29</assemblyWeight>
+<assemblyExactWeight>247308.06</assemblyExactWeight>
+<collisionSize x="2949.906" y="2229.330" z="1687.163"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="344" num="b#internal1000" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="315" class="Beam" dstvName="W12X26" id="314" name="W12X26">
+<explicitQuantity>1</explicitQuantity>
+<length>2949.903</length>
+<paintArea>3701420.159</paintArea>
+<ObjectTopLevel>154.940</ObjectTopLevel>
+<ObjectBottomLevel>-154.940</ObjectBottomLevel>
+<material key="ASTMA992" name="A992"/>
+<weight>114138.42</weight>
+<exactWeight>104954.31</exactWeight>
+<weightPerMeter>38692.26</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 W Shape#@§@#W12X26" name="W12X26"/>
+<sysLength>2709.622</sysLength>
+<sawLength>2949.903</sawLength>
+<angleX1>-45.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>-45.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>164.846</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>309.880</SawLengthWebAtEnd>
+<ElementID>2</ElementID></part></singlepart>
+<singlepart id="346" num="b#internal1002" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="317" class="Beam" dstvName="W12X26" id="316" name="W12X26">
+<explicitQuantity>1</explicitQuantity>
+<length>1687.162</length>
+<paintArea>2116982.780</paintArea>
+<ObjectTopLevel>154.939</ObjectTopLevel>
+<ObjectBottomLevel>-1532.223</ObjectBottomLevel>
+<material key="ASTMA992" name="A992"/>
+<weight>65280.10</weight>
+<exactWeight>59285.12</exactWeight>
+<weightPerMeter>38692.26</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 W Shape#@§@#W12X26" name="W12X26"/>
+<sysLength>1532.223</sysLength>
+<sawLength>1687.162</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>45.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>309.880</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>3</ElementID></part></singlepart>
+<singlepart id="345" num="b#internal1001" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="313" class="Beam" dstvName="W12X26" id="312" name="W12X26">
+<explicitQuantity>1</explicitQuantity>
+<length>2229.329</length>
+<paintArea>2797272.547</paintArea>
+<ObjectTopLevel>154.940</ObjectTopLevel>
+<ObjectBottomLevel>-154.940</ObjectBottomLevel>
+<material key="ASTMA992" name="A992"/>
+<weight>86257.77</weight>
+<exactWeight>83068.64</exactWeight>
+<weightPerMeter>38692.26</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 W Shape#@§@#W12X26" name="W12X26"/>
+<sysLength>2146.907</sysLength>
+<sawLength>2229.329</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>45.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>164.846</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>1</ElementID></part></singlepart></proxy></mainpart></parts>
+<DerivedDocuments>
+<Details/>
+<BOMs/>
+<DSTVFiles/></DerivedDocuments></modelExtract>
+
