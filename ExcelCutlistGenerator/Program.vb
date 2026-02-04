@@ -11,7 +11,7 @@ Module Program
 
         'used for debugging so I don't have to run the program through excel every time
         If debugMode Then
-            Globals.inPath = "C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\CutlistTestSheet.xlsx"
+            Globals.inPath = "C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\CutlistTestSheet_angleNest.xlsm"
         Else
             Globals.inPath = args(0) ' get the input path from the command line arguments
         End If
@@ -52,8 +52,6 @@ Module Program
         Console.WriteLine("Nesting Complete.")
         Console.WriteLine("Press any key to exit.")
         Console.ReadKey()
-
-
     End Sub
 
     Function ReadPartData(ByRef workbook As XLWorkbook) As (List(Of partObject), List(Of String))
@@ -444,7 +442,8 @@ Module Program
 
     Sub GetOutputPath()
         Dim newFilePostfix As String = "_Cutlist_"
-        Dim outputPath As String = inPath.Insert(inPath.LastIndexOf("."), newFilePostfix)
+        'Dim outputPath As String = inPath.Insert(inPath.LastIndexOf("."), newFilePostfix)
+        Dim outputPath As String = inPath.Substring(0, Len(inPath) - 5) & newFilePostfix & ".xlsx"
         Globals.outPath = outputPath
     End Sub
 

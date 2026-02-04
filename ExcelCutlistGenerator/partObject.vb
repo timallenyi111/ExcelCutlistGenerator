@@ -8,6 +8,8 @@
     Dim _duplicateDifLength As Boolean = False
     Dim _duplicateDifMaterial As Boolean = False
     Dim _warningList As New List(Of String)
+    'Dim _end1Angle As Double = 0.0
+    'Dim _end2Angle As Double = 0.0
 
     Public Sub New(ByRef partNumber As String, ByRef qty As Integer, ByRef length As Double, ByRef material As String)
         _partNumber = partNumber
