@@ -33,8 +33,6 @@ Module OutputData
                     ws.Cell(currentRow, 2).Value = "Stick " & stick.ID
                     FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
 
-
-
                     'move to the next row for data
                     currentRow += 1
                     'write the part data
@@ -42,6 +40,13 @@ Module OutputData
                         InsertPartRow(ws, currentRow, part)
                         currentRow += 1
                     Next
+
+                    ws.Cell(currentRow, 1).Value = "Drop(in):"
+                    FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
+                    ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
+                    FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
+
+                    currentRow += 1
                 Next
             Next
             Console.WriteLine("Number of Page Breaks: " & ws.PageSetup.RowBreaks.Count)
@@ -138,7 +143,7 @@ Module OutputData
 
     End Sub
 
-    Private Sub WriteNestToConsole(ByRef nestList As List(Of List(Of StickObject)))
+    Sub WriteNestToConsole(ByRef nestList As List(Of List(Of StickObject)))
         For Each nest As List(Of StickObject) In nestList
             For Each stick As StickObject In nest
                 Console.WriteLine("Material: " & stick.StockName & " Stick ID: " & stick.ID & ":")

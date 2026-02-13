@@ -47,12 +47,18 @@ Module ReadData
 
         Dim partWS = workbook.Worksheet(1) ' Assuming the first partWS
         Dim partLastRow = partWS.LastRowUsed().RowNumber()
+
+        'these values have been modified to work with the AS partlist directly
+        Dim partNumCol = 1
+        Dim materialCol = 2
+        Dim qtyCol = 3
+        Dim lenCol = 4
         For row As Integer = 2 To partLastRow ' Assuming the first row is headers
-            Dim partNumber = partWS.Cell(row, 1).GetString().Trim()
-            Dim lengthFrac = partWS.Cell(row, 2).GetString().Trim()
+            Dim partNumber = partWS.Cell(row, partNumCol).GetString().Trim()
+            Dim lengthFrac = partWS.Cell(row, lenCol).GetString().Trim()
             Dim lengthDecimal = InchFracToDecimal(lengthFrac)
-            Dim qty = partWS.Cell(row, 3).GetValue(Of Integer)() ' Assuming quantities are in the third column
-            Dim material = partWS.Cell(row, 4).GetString().Trim().ToUpper() ' Assuming material types are in the fourth column
+            Dim qty = partWS.Cell(row, qtyCol).GetValue(Of Integer)() ' Assuming quantities are in the third column
+            Dim material = partWS.Cell(row, materialCol).GetString().Trim().ToUpper() ' Assuming material types are in the fourth column
             If uniqueMaterials.Contains(material) = False Then 'add to unique materials list
                 uniqueMaterials.Add(material)
             End If

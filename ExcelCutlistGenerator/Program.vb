@@ -12,6 +12,7 @@ Module Program
         'used for debugging so I don't have to run the program through excel every time
         If debugMode Then
             Globals.inPath = "C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\CutlistTestSheet_angleNest.xlsm"
+            'Globals.inPath = "C:\Users\TimAllen\DC\ACCDocs\AR Erectors Engineering\TMH - Plant 5 Tack Up Frame Platform\Project Files\Advance Steel\Platform 18_19\BOM\Saw list - 18_19.xlsx"
         Else
             Globals.inPath = args(0) ' get the input path from the command line arguments
         End If
@@ -30,17 +31,27 @@ Module Program
         'generate the nest list
         Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList, uniqueMaterialsList) 'list of nests, each nest is a list of sticks        
 
-        cw("OUTPUT FILE DISABLED FOR DEBUGGING", 1, 0)
-        cw("UNCOMMENT *WriteOutputNewFile(nestList)* in main to enable it")
+        If enableOutput Then
+            WriteOutputNewFile(nestList)
+        Else
+            'don't write data to a new file to prevent having 
+            cw("OUTPUT FILE DISABLED FOR DEBUGGING", 1, 0)
+            cw("Change enableOutput to True in global parameters")
 
-        Console.WriteLine("Nesting Complete.")
-        Console.WriteLine("Press any key to exit.")
+            WriteNestToConsole(nestList)
+        End If
+
+        cw("Nesting Complete.")
+        cw("Press any key to exit.")
         Console.ReadKey()
     End Sub
 
+
+
     Function InchFracToDecimal(frac As String) As Double
+
         If frac.Contains("/") = False Then
-            ' No fraction, just return the integer value
+            ' No fraction, just return the integer value           
             Return CDbl(frac)
         Else
             Dim inchInt As Integer = CInt(frac.Split(" ")(0))

@@ -4,5 +4,6 @@
     Public outPath As String = ""
     'Public inPath As String = "C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\CutlistTestSheet.xlsx"
     Public debugMode As Boolean = True
+    Public enableOutput As Boolean = True
 
 End Module
