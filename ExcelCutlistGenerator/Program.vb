@@ -49,9 +49,9 @@ Module Program
         Console.WriteLine("Writing Output File: " & Globals.outPath)
         WriteOutputNewFile(nestList)
 
-        Console.WriteLine("Nesting Complete.")
-        Console.WriteLine("Press any key to exit.")
-        Console.ReadKey()
+        'Console.WriteLine("Nesting Complete.")
+        'Console.WriteLine("Press any key to exit.")
+        'Console.ReadKey()
 
 
     End Sub
@@ -232,6 +232,13 @@ Module Program
                         InsertPartRow(ws, currentRow, part)
                         currentRow += 1
                     Next
+
+                    ws.Cell(currentRow, 1).Value = "Drop(in):"
+                    FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
+                    ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
+                    FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
+                    currentRow += 1
+
                 Next
             Next
             Console.WriteLine("Number of Page Breaks: " & ws.PageSetup.RowBreaks.Count)
