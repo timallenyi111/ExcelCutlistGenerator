@@ -99,6 +99,7 @@ Module Program
             ' No fraction, just return the integer value
             Return CDbl(frac)
         Else
+            Console.WriteLine(frac)
             Dim inchInt As Integer = CInt(frac.Split(" ")(0))
             Dim inchFrac As String = frac.Split(" ")(1)
             Dim numerator As Integer = CInt(inchFrac.Split("/")(0))
