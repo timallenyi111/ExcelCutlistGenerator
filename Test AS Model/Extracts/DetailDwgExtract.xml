@@ -19,16 +19,419 @@
 <base>AllMainparts</base>
 <DerivedDocuments>1</DerivedDocuments></selection>
 <tables>
+<profileSection key="AISC 15.0 Angle equal#@§@#L2X2X1/8" sectionClass="W">
+<weightPerMeter>2455.470501</weightPerMeter>
+<paintAreaPerMeter>203200.000000</paintAreaPerMeter></profileSection>
+<profileSection key="AISC 15.0 Angle unequal#@§@#L2-1/2X1-1/2X3/16" sectionClass="W">
+<weightPerMeter>3631.120014</weightPerMeter>
+<paintAreaPerMeter>203200.000000</paintAreaPerMeter></profileSection>
 <profileSection key="AISC 15.0 W Shape#@§@#W12X26" sectionClass="I">
 <weightPerMeter>38692.262440</weightPerMeter>
 <paintAreaPerMeter>1254760.000000</paintAreaPerMeter></profileSection></tables>
 <parts>
-<mainpart id="3B2" num="B#internal1" quantity="1">
+<mainpart id="439" num="Ba4" quantity="1">
 <explicitQuantity>1</explicitQuantity>
-<proxy ACADID="3B0" basepart="314" id="3AF">
-<assemblyWeight>265676.29</assemblyWeight>
-<assemblyExactWeight>247308.06</assemblyExactWeight>
-<collisionSize x="2949.906" y="2229.330" z="1687.163"/>
+<proxy ACADID="435" basepart="424" id="434">
+<assemblyWeight>2459.20</assemblyWeight>
+<assemblyExactWeight>2425.50</assemblyExactWeight>
+<collisionSize x="1001.520" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="432" num="b#internal1006" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="425" class="Beam" dstvName="L2X2X1/8" id="424" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>1001.520</length>
+<paintArea>203508.949</paintArea>
+<ObjectTopLevel>50.800</ObjectTopLevel>
+<ObjectBottomLevel>0.000</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2459.20</weight>
+<exactWeight>2425.50</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>987.958</sysLength>
+<sawLength>1001.520</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>45.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>50.800</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>15</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="43A" num="Ba5" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="437" basepart="426" id="436">
+<assemblyWeight>2044.76</assemblyWeight>
+<assemblyExactWeight>2011.06</assemblyExactWeight>
+<collisionSize x="832.738" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="433" num="b#internal1007" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="427" class="Beam" dstvName="L2X2X1/8" id="426" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>832.738</length>
+<paintArea>169212.297</paintArea>
+<ObjectTopLevel>50.800</ObjectTopLevel>
+<ObjectBottomLevel>0.000</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2044.76</weight>
+<exactWeight>2011.06</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>819.175</sysLength>
+<sawLength>832.738</sawLength>
+<angleX1>-45.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>50.800</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>16</ElementID>
+<UserAttribute1>`</UserAttribute1></part></singlepart></proxy></mainpart>
+<mainpart id="480" num="Ba8" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="47A" basepart="44B" id="479">
+<assemblyWeight>4773.55</assemblyWeight>
+<assemblyExactWeight>4620.44</assemblyExactWeight>
+<collisionSize x="1314.622" y="38.100" z="63.500"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="471" num="b#internal1008" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="44C" class="Beam" dstvName="L2-1/2X1-1/2X3/16" id="44B" name="L2-1/2X1-1/2X3/16">
+<explicitQuantity>1</explicitQuantity>
+<length>1314.622</length>
+<paintArea>267131.136</paintArea>
+<ObjectTopLevel>63.500</ObjectTopLevel>
+<ObjectBottomLevel>0.000</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>4773.55</weight>
+<exactWeight>4620.44</exactWeight>
+<weightPerMeter>3631.12</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle unequal#@§@#L2-1/2X1-1/2X3/16" name="L2-1/2X1-1/2X3/16"/>
+<sysLength>1251.123</sysLength>
+<sawLength>1314.622</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>-45.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>63.500</SawLengthWebAtEnd>
+<ElementID>22</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="481" num="Ba12" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="47C" basepart="44D" id="47B">
+<assemblyWeight>3621.66</assemblyWeight>
+<assemblyExactWeight>3468.55</assemblyExactWeight>
+<collisionSize x="997.394" y="38.100" z="63.500"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="474" num="b#internal1011" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="44E" class="Beam" dstvName="L2-1/2X1-1/2X3/16" id="44D" name="L2-1/2X1-1/2X3/16">
+<explicitQuantity>1</explicitQuantity>
+<length>997.394</length>
+<paintArea>202670.539</paintArea>
+<ObjectTopLevel>63.499</ObjectTopLevel>
+<ObjectBottomLevel>-933.896</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>3621.66</weight>
+<exactWeight>3468.55</exactWeight>
+<weightPerMeter>3631.12</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle unequal#@§@#L2-1/2X1-1/2X3/16" name="L2-1/2X1-1/2X3/16"/>
+<sysLength>933.896</sysLength>
+<sawLength>997.394</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>45.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>63.500</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>23</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="4D9" num="B#internal1" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="4D5" basepart="4C4" id="4D4">
+<assemblyWeight>2703.37</assemblyWeight>
+<assemblyExactWeight>2669.67</assemblyExactWeight>
+<collisionSize x="1100.959" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="4D3" num="b#internal1010" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="4C5" class="Beam" dstvName="L2X2X1/8" id="4C4" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>1100.959</length>
+<paintArea>223714.840</paintArea>
+<ObjectTopLevel>37.236</ObjectTopLevel>
+<ObjectBottomLevel>-13.564</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2703.37</weight>
+<exactWeight>2669.67</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>1087.397</sysLength>
+<sawLength>1100.959</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>45.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>50.800</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>27</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="4DA" num="B#internal2" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="4D7" basepart="4C6" id="4D6">
+<assemblyWeight>3037.69</assemblyWeight>
+<assemblyExactWeight>3003.99</assemblyExactWeight>
+<collisionSize x="1237.113" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="4D2" num="b#internal1009" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="4C7" class="Beam" dstvName="L2X2X1/8" id="4C6" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>1237.113</length>
+<paintArea>251381.276</paintArea>
+<ObjectTopLevel>37.236</ObjectTopLevel>
+<ObjectBottomLevel>-13.564</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>3037.69</weight>
+<exactWeight>3003.99</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>1223.550</sysLength>
+<sawLength>1237.113</sawLength>
+<angleX1>-45.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>50.800</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>28</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="503" num="B#internal3" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="4FB" basepart="4DB" id="4FA">
+<assemblyWeight>2728.98</assemblyWeight>
+<assemblyExactWeight>2695.27</assemblyExactWeight>
+<collisionSize x="1111.386" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="4F7" num="b#internal1013" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="4DC" class="Beam" dstvName="L2X2X1/8" id="4DB" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>1111.386</length>
+<paintArea>225833.653</paintArea>
+<ObjectTopLevel>955.947</ObjectTopLevel>
+<ObjectBottomLevel>905.147</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2728.98</weight>
+<exactWeight>2695.27</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>1097.824</sysLength>
+<sawLength>1111.386</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>45.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>50.800</SawLengthWebAtEnd>
+<ElementID>30</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="504" num="B#internal4" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="4FD" basepart="4DD" id="4FC">
+<assemblyWeight>3405.76</assemblyWeight>
+<assemblyExactWeight>3372.06</assemblyExactWeight>
+<collisionSize x="1387.009" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="4F6" num="b#internal1012" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="4DE" class="Beam" dstvName="L2X2X1/8" id="4DD" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>1387.009</length>
+<paintArea>281840.279</paintArea>
+<ObjectTopLevel>955.947</ObjectTopLevel>
+<ObjectBottomLevel>905.147</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>3405.76</weight>
+<exactWeight>3372.06</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>1373.447</sysLength>
+<sawLength>1387.009</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>-45.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>50.800</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>31</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="505" num="B#internal5" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="4FF" basepart="4DF" id="4FE">
+<assemblyWeight>1268.52</assemblyWeight>
+<assemblyExactWeight>1177.49</assemblyExactWeight>
+<collisionSize x="516.611" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="4F9" num="b#internal1015" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="4E0" class="Beam" dstvName="L2X2X1/8" id="4DF" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>516.611</length>
+<paintArea>104975.382</paintArea>
+<ObjectTopLevel>-79.333</ObjectTopLevel>
+<ObjectBottomLevel>-130.133</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>1268.52</weight>
+<exactWeight>1177.49</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>479.376</sysLength>
+<sawLength>516.611</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>-45.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>50.800</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>32</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="506" num="B#internal6" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="501" basepart="4E1" id="500">
+<assemblyWeight>2282.70</assemblyWeight>
+<assemblyExactWeight>2191.67</assemblyExactWeight>
+<collisionSize x="929.639" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="4F8" num="b#internal1014" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="4E2" class="Beam" dstvName="L2X2X1/8" id="4E1" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>929.639</length>
+<paintArea>188902.649</paintArea>
+<ObjectTopLevel>-79.334</ObjectTopLevel>
+<ObjectBottomLevel>-1008.973</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2282.70</weight>
+<exactWeight>2191.67</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>892.404</sysLength>
+<sawLength>929.639</sawLength>
+<angleX1>45.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>50.800</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>33</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="3CC" num="Ba9" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="3BD" basepart="312" id="3BC">
+<assemblyWeight>86257.77</assemblyWeight>
+<assemblyExactWeight>83068.64</assemblyExactWeight>
+<collisionSize x="2229.329" y="164.846" z="309.880"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="345" num="b#internal1001" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="313" class="Beam" dstvName="W12X26" id="312" name="W12X26">
+<explicitQuantity>1</explicitQuantity>
+<length>2229.329</length>
+<paintArea>2797272.547</paintArea>
+<ObjectTopLevel>154.940</ObjectTopLevel>
+<ObjectBottomLevel>-154.940</ObjectBottomLevel>
+<material key="ASTMA992" name="A992"/>
+<weight>86257.77</weight>
+<exactWeight>83068.64</exactWeight>
+<weightPerMeter>38692.26</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 W Shape#@§@#W12X26" name="W12X26"/>
+<sysLength>2146.907</sysLength>
+<sawLength>2229.329</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>0.0000</angleY1>
+<angleX2>45.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>0.000</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>164.846</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
+<ElementID>1</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="3CD" num="Ba10" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="3BF" basepart="314" id="3BE">
+<assemblyWeight>114138.42</assemblyWeight>
+<assemblyExactWeight>104954.31</assemblyExactWeight>
+<collisionSize x="2949.903" y="164.846" z="309.880"/>
 <ApprovalStatus>Not Set</ApprovalStatus>
 <GalvanizingConstructionClass>None</GalvanizingConstructionClass>
 <GalvanizingDetailClass>None</GalvanizingDetailClass>
@@ -58,7 +461,17 @@
 <SawLengthWebAtStart>0.000</SawLengthWebAtStart>
 <SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
 <SawLengthWebAtEnd>309.880</SawLengthWebAtEnd>
-<ElementID>2</ElementID></part></singlepart>
+<ElementID>2</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="3CE" num="Ba11" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="3C1" basepart="316" id="3C0">
+<assemblyWeight>65280.10</assemblyWeight>
+<assemblyExactWeight>59285.12</assemblyExactWeight>
+<collisionSize x="1687.162" y="164.846" z="309.880"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
 <singlepart id="346" num="b#internal1002" quantity="1">
 <explicitQuantity>1</explicitQuantity>
 <part ACADID="317" class="Beam" dstvName="W12X26" id="316" name="W12X26">
@@ -84,35 +497,177 @@
 <SawLengthWebAtStart>309.880</SawLengthWebAtStart>
 <SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
 <SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
-<ElementID>3</ElementID></part></singlepart>
-<singlepart id="345" num="b#internal1001" quantity="1">
+<ElementID>3</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="3C9" num="Ba1" quantity="1">
 <explicitQuantity>1</explicitQuantity>
-<part ACADID="313" class="Beam" dstvName="W12X26" id="312" name="W12X26">
+<proxy ACADID="3C3" basepart="39C" id="3C2">
+<assemblyWeight>2370.02</assemblyWeight>
+<assemblyExactWeight>2278.98</assemblyExactWeight>
+<collisionSize x="965.199" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="3B8" num="b#internal1005" quantity="1">
 <explicitQuantity>1</explicitQuantity>
-<length>2229.329</length>
-<paintArea>2797272.547</paintArea>
-<ObjectTopLevel>154.940</ObjectTopLevel>
-<ObjectBottomLevel>-154.940</ObjectBottomLevel>
-<material key="ASTMA992" name="A992"/>
-<weight>86257.77</weight>
-<exactWeight>83068.64</exactWeight>
-<weightPerMeter>38692.26</weightPerMeter>
+<part ACADID="39D" class="Beam" dstvName="L2X2X1/8" id="39C" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>965.199</length>
+<paintArea>196128.353</paintArea>
+<ObjectTopLevel>0.000</ObjectTopLevel>
+<ObjectBottomLevel>-50.800</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2370.02</weight>
+<exactWeight>2278.98</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
 <density>7850.00</density>
-<section key="AISC 15.0 W Shape#@§@#W12X26" name="W12X26"/>
-<sysLength>2146.907</sysLength>
-<sawLength>2229.329</sawLength>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>914.400</sysLength>
+<sawLength>965.199</sawLength>
 <angleX1>0.0000</angleX1>
 <angleY1>0.0000</angleY1>
-<angleX2>45.0000</angleX2>
-<angleY2>0.0000</angleY2>
+<angleX2>0.0000</angleX2>
+<angleY2>-45.0000</angleY2>
 <SawCutInfo>1</SawCutInfo>
 <SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
 <SawLengthWebAtStart>0.000</SawLengthWebAtStart>
-<SawLengthFlangeAtEnd>164.846</SawLengthFlangeAtEnd>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>50.800</SawLengthWebAtEnd>
+<ElementID>7</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="3CA" num="Ba2" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="3C5" basepart="39E" id="3C4">
+<assemblyWeight>2993.70</assemblyWeight>
+<assemblyExactWeight>2868.96</assemblyExactWeight>
+<collisionSize x="1219.197" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="3B7" num="b#internal1004" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="39F" class="Beam" dstvName="L2X2X1/8" id="39E" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>1219.197</length>
+<paintArea>247740.865</paintArea>
+<ObjectTopLevel>-0.001</ObjectTopLevel>
+<ObjectBottomLevel>-1219.199</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>2993.70</weight>
+<exactWeight>2868.96</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>1219.200</sysLength>
+<sawLength>1219.197</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>45.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>45.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>50.800</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
+<SawLengthWebAtEnd>50.800</SawLengthWebAtEnd>
+<ElementID>8</ElementID></part></singlepart></proxy></mainpart>
+<mainpart id="41F" num="Ba3" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<proxy ACADID="41D" basepart="40C" id="41C">
+<assemblyWeight>1819.34</assemblyWeight>
+<assemblyExactWeight>1785.64</assemblyExactWeight>
+<collisionSize x="740.933" y="50.800" z="50.800"/>
+<ApprovalStatus>Not Set</ApprovalStatus>
+<GalvanizingConstructionClass>None</GalvanizingConstructionClass>
+<GalvanizingDetailClass>None</GalvanizingDetailClass>
+<GalvanizingConfidence>None</GalvanizingConfidence>
+<singlepart id="41B" num="b#internal1003" quantity="1">
+<explicitQuantity>1</explicitQuantity>
+<part ACADID="40D" class="Beam" dstvName="L2X2X1/8" id="40C" name="L2X2X1/8">
+<explicitQuantity>1</explicitQuantity>
+<length>740.933</length>
+<paintArea>150557.592</paintArea>
+<ObjectTopLevel>-1168.400</ObjectTopLevel>
+<ObjectBottomLevel>-1219.200</ObjectBottomLevel>
+<material key="ASTMA36" name="A36"/>
+<weight>1819.34</weight>
+<exactWeight>1785.64</exactWeight>
+<weightPerMeter>2455.47</weightPerMeter>
+<density>7850.00</density>
+<section key="AISC 15.0 Angle equal#@§@#L2X2X1/8" name="L2X2X1/8"/>
+<sysLength>740.934</sysLength>
+<sawLength>740.933</sawLength>
+<angleX1>0.0000</angleX1>
+<angleY1>-45.0000</angleY1>
+<angleX2>0.0000</angleX2>
+<angleY2>0.0000</angleY2>
+<SawCutInfo>1</SawCutInfo>
+<SawLengthFlangeAtStart>0.000</SawLengthFlangeAtStart>
+<SawLengthWebAtStart>50.800</SawLengthWebAtStart>
+<SawLengthFlangeAtEnd>0.000</SawLengthFlangeAtEnd>
 <SawLengthWebAtEnd>0.000</SawLengthWebAtEnd>
-<ElementID>1</ElementID></part></singlepart></proxy></mainpart></parts>
+<ElementID>12</ElementID></part></singlepart></proxy></mainpart></parts>
 <DerivedDocuments>
-<Details/>
+<Details>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="9" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba9 Sheet 9.dwg" id="48F" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba9</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Assembly - Blank | FRONT VIEW ONLY" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 13:32:08]" Scale="3/4&quot;=1'-0&quot;" Status="Up to date" Title="Ba9 Qty: 1 W12X26" drawingType="2" id="48E">
+<MainParts>
+<Item>Ba9</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="2" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba2 Sheet 2.dwg" id="403" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba2</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 12:23:15]" Scale="1 1/2&quot;=1'-0&quot;" Status="Update required" Title="1 - Ba2 L2X2X1/8 Grid reference " drawingType="2" id="402">
+<MainParts>
+<Item>Ba2</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="1" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba1 Sheet 1.dwg" id="3FF" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba1</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 12:23:15]" Scale="1 1/2&quot;=1'-0&quot;" Status="Update required" Title="1 - Ba1 L2X2X1/8 Grid reference " drawingType="2" id="3FE">
+<MainParts>
+<Item>Ba1</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="10" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba10 Sheet 10.dwg" id="493" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba10</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Assembly - Blank | FRONT VIEW ONLY" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 13:32:08]" Scale="3/4&quot;=1'-0&quot;" Status="Up to date" Title="Ba10 Qty: 1 W12X26" drawingType="2" id="492">
+<MainParts>
+<Item>Ba10</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="4" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba4 Sheet 4.dwg" id="43C" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba4</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 12:28:53]" Scale="1 1/2&quot;=1'-0&quot;" Status="Up to date" Title="1 - Ba4 L2X2X1/8 Grid reference " drawingType="2" id="43B">
+<MainParts>
+<Item>Ba4</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="11" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba11 Sheet 11.dwg" id="497" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba11</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Assembly - Blank | FRONT VIEW ONLY" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 13:32:08]" Scale="3/4&quot;=1'-0&quot;" Status="Up to date" Title="Ba11 Qty: 1 W12X26" drawingType="2" id="496">
+<MainParts>
+<Item>Ba11</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="3" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba3 Sheet 3.dwg" id="421" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba3</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 12:27:36]" Scale="1 1/2&quot;=1'-0&quot;" Status="Up to date" Title="1 - Ba3 L2X2X1/8 Grid reference " drawingType="2" id="420">
+<MainParts>
+<Item>Ba3</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="5" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba5 Sheet 5.dwg" id="440" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba5</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 12:28:53]" Scale="1 1/2&quot;=1'-0&quot;" Status="Up to date" Title="1 - Ba5 L2X2X1/8 Grid reference " drawingType="2" id="43F">
+<MainParts>
+<Item>Ba5</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="8" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba8 Sheet 8.dwg" id="48B" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba8</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 13:32:08]" Scale="1 1/2&quot;=1'-0&quot;" Status="Up to date" Title="1 - Ba8 L2-1/2X1-1/2X3/16 Grid reference " drawingType="2" id="48A">
+<MainParts>
+<Item>Ba8</Item></MainParts></DetailObject></DetailFile>
+<DetailFile ApprovalStatus="Not Set" DrawingDate="2/18/2026" drawingNumber="12" drawingType="2" fileLocation="C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\Test AS Model\Details\" fileName="Assembly Ba12 Sheet 12.dwg" id="49B" prototypeName="ASDETPROTO-Assembly-ANSI-B">
+<MainParts>
+<Item>Ba12</Item></MainParts>
+<DetailObject DetailName="54AE" DrawingStyle="5 - Angle" ProcessDescription="Selected Assemblies Beam Each ANSI-B | NO DIM | FRONT VIEW ONLY [18.02.2026, 13:32:08]" Scale="1 1/2&quot;=1'-0&quot;" Status="Up to date" Title="1 - Ba12 L2-1/2X1-1/2X3/16 Grid reference " drawingType="2" id="49A">
+<MainParts>
+<Item>Ba12</Item></MainParts></DetailObject></DetailFile></Details>
 <BOMs/>
 <DSTVFiles/></DerivedDocuments></modelExtract>
 

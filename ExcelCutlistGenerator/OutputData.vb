@@ -45,10 +45,11 @@ Module OutputData
                     FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
                     ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
                     FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
-
                     currentRow += 1
+
                 Next
             Next
+
             Console.WriteLine("Number of Page Breaks: " & ws.PageSetup.RowBreaks.Count)
 
             ws.Columns("A:Z").AdjustToContents()

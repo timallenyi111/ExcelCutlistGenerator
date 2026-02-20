@@ -53,6 +53,7 @@ Module ReadData
         Dim materialCol = 2
         Dim qtyCol = 3
         Dim lenCol = 4
+
         For row As Integer = 2 To partLastRow ' Assuming the first row is headers
             Dim partNumber = partWS.Cell(row, partNumCol).GetString().Trim()
             Dim lengthFrac = partWS.Cell(row, lenCol).GetString().Trim()
@@ -67,7 +68,6 @@ Module ReadData
 
             cw(partNumber, 1, 0)
             cw(material & "*", 0, 1)
-
 
             'find the stock that this part will be cut from 
             Dim stockUsed As stockObject = Nothing
@@ -84,11 +84,12 @@ Module ReadData
                 Throw New Exception("The material used for this part was not fouond in the list of available stock")
             End If
 
+            'read in angle date and assign it to the part instance
             cw(stockUsed.Name, 0, 1)
             Dim angleRange As IXLRange = partWS.Range(partWS.Cell(row, 5), partWS.Cell(row, 8)) 'the range of cells containing angle information
-
             partItem = GetPartAngles(angleRange, stockUsed, partItem)
 
+            'add the part to the part list and move on to the next row
             partList.Add(partItem)
         Next
 
@@ -185,8 +186,6 @@ Module ReadData
             Return part
         End If
 
-
-
 #Region "determine cut orientation and angle"
         'we need to determine which way the material needs to be place in the saw
         'this depends on if the angles are on the web or flange
@@ -194,7 +193,7 @@ Module ReadData
         'angles in the web columns would reflect an angle cut on the height plane (sitting on width side in saw)
 
         'to address this the part is given a cut orientation
-        '0 = either height or widht side down 
+        '0 = either height or width side down 
         '1 = width side down in the saw
         '2 = height side down in the saw
         '0 is the default but won't be used here (except for ST) because we know the part has an angle 

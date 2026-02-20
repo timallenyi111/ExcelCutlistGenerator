@@ -1,0 +1,8 @@
+Toggle All: Ctrl+M,L
+Collapse All: Ctrl+M, O
+Expand All: Ctrl+M, P
+Collapse Current Block: Ctrl+M,M
+Expand Current Block: Ctrl+M, U
+
+Comment Block: Ctrl+K, C
+Uncomment Block: Ctrl+K, U
