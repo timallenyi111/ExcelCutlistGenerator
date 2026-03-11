@@ -17,19 +17,22 @@ Module Program
             Globals.inPath = args(0) ' get the input path from the command line arguments
         End If
         GetOutputPath() ' set the output path based on the input path
+
+        'sets the blade with to be subtracted from the available stock length per every cut
         Globals.bladeWidth = 0.1875 'inches
 
         'Read data from excel sheet
         Dim inputData As (List(Of partObject), List(Of String), List(Of stockObject)) = ReadExcelData()
 
         Dim partList As List(Of partObject) = inputData.Item1
-        Dim uniqueMaterialsList As List(Of String) = inputData.Item2 'list of the unique material types from the part list
+        'Dim uniqueMaterialsList As List(Of String) = inputData.Item2 'list of the unique material types from the part list
         Dim stockList As List(Of stockObject) = inputData.Item3
 
         cw("Generating Cutlist Nests...", 1)
 
         'generate the nest list
-        Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList, uniqueMaterialsList) 'list of nests, each nest is a list of sticks        
+        'Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList, uniqueMaterialsList) 'list of nests, each nest is a list of sticks        
+        Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList) 'list of nests, each nest is a list of sticks     
 
         If enableOutput Then
             WriteOutputNewFile(nestList)
@@ -47,44 +50,28 @@ Module Program
     End Sub
 
 
-
-    Function InchFracToDecimal(frac As String) As Double
-
-        If frac.Contains("/") = False Then
-            ' No fraction, just return the integer value           
-            Return CDbl(frac)
-        Else
-            Dim inchInt As Integer = CInt(frac.Split(" ")(0))
-            Dim inchFrac As String = frac.Split(" ")(1)
-            Dim numerator As Integer = CInt(inchFrac.Split("/")(0))
-            Dim denominator As Integer = CInt(inchFrac.Split("/")(1))
-            Dim inchDecimal As Double = inchInt + (numerator / denominator)
-            Return inchDecimal
-        End If
-    End Function
-
-    Function LegacyNesting(ByRef partList As List(Of partObject), ByRef stockList As List(Of stockObject), uniqueMaterialsList As List(Of String)) As List(Of List(Of StickObject))
+    Function LegacyNesting(ByRef partList As List(Of partObject), ByRef stockList As List(Of stockObject)) As List(Of List(Of StickObject))
 
         Dim nestList As New List(Of List(Of StickObject)) 'list of nests, each nest is a list of sticks
 
         'nest each material type one at a time
-        For Each uniqueStock As String In uniqueMaterialsList
-            Dim currentStock As stockObject = Nothing
+        For Each currentStock As stockObject In stockList
+            'Dim currentStock As stockObject = Nothing
 
             'retrieve the current material from the available stock list
-            For Each stock As stockObject In stockList
-                If stock.Name = uniqueStock Then
-                    currentStock = stock
-                    Exit For
-                End If
-            Next
+            'For Each stock As stockObject In stockList
+            '    If stock.Name = uniqueStock Then
+            '        currentStock = stock
+            '        Exit For
+            '    End If
+            'Next
 
             Dim stickList As New List(Of StickObject)
             Dim sortedPartsList As New List(Of partObject) 'parts sorted by length (longest to shortest) and matching material type
 
             'sort the parts by length (longest to shortest) and matching material type
             For Each part As partObject In partList
-                If part.Stock = uniqueStock Then
+                If part.Stock = currentStock.Name Then
                     If sortedPartsList.Count = 0 Then
                         sortedPartsList.Add(part)
                     Else

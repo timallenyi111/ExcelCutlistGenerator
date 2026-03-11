@@ -2,7 +2,7 @@
     Dim _partNumber As String
     Dim _qty As Integer
     Dim _length As Double
-    Dim _material As String
+    Dim _partStock As String
     Dim _remainingQty As Integer
     Dim _duplicateIdentical As Boolean = False
     Dim _duplicateDifLength As Boolean = False
@@ -17,7 +17,7 @@
         _qty = qty
         _remainingQty = qty
         _length = length
-        _material = material
+        _partStock = material
 
     End Sub
     ReadOnly Property PartNumber As String
@@ -41,7 +41,7 @@
 
     ReadOnly Property Stock As String
         Get
-            Return _material
+            Return _partStock
         End Get
     End Property
 
@@ -84,8 +84,8 @@
     ''' <summary>
     ''' The orienation the material needs to be cut in the saw |
     ''' 0 doesn't matter |
-    ''' 1 is width side down |
-    ''' 2 is height side down 
+    ''' 1 is width/short side down |
+    ''' 2 is height/long side down 
     ''' </summary>
     ''' <returns></returns>
     Public Property CutOrientation As Integer
@@ -97,6 +97,7 @@
         End Set
     End Property
 
+    ''used for displaying warnings on the output cutlist.
 #Region "Warning Properties and Subs"
     Public Property DuplicateIdentical As Boolean
         Get

@@ -11,7 +11,7 @@ Module ReadData
     ''' </summary>
     ''' <returns>
     ''' <param name="partList"></param>Item 1: a list of all parts from excel sheet |
-    ''' <param name="uniqueMaterialList"></param>Item 2: a list of every different material used |
+    ''' <param name="uniqueMaterialList"></param>Item 2: a list of every different partStock used |
     ''' <param name="stockList"></param>Item 3: a list of available stock 
     ''' </returns>
     Function ReadExcelData() As (List(Of partObject), List(Of String), List(Of stockObject))
@@ -40,7 +40,7 @@ Module ReadData
         Return (partList, uniqueMaterialList, stockList)
     End Function
 
-    Private Function ReadPartData(ByRef workbook As XLWorkbook, ByRef stockList As List(Of stockObject)) As (List(Of partObject), List(Of String))
+    Private Function ReadPartData(ByRef workbook As XLWorkbook, ByRef stockList As List(Of stockObject)) As List(Of partObject)
         Dim partList As New List(Of partObject)
         Dim uniqueMaterials As New List(Of String)
         'read data from spreadsheet
@@ -50,41 +50,38 @@ Module ReadData
 
         'these values have been modified to work with the AS partlist directly
         Dim partNumCol = 1
-        Dim materialCol = 2
+        Dim materialCol = 4
         Dim qtyCol = 3
-        Dim lenCol = 4
+        Dim lenCol = 2
 
         For row As Integer = 2 To partLastRow ' Assuming the first row is headers
             Dim partNumber = partWS.Cell(row, partNumCol).GetString().Trim()
             Dim lengthFrac = partWS.Cell(row, lenCol).GetString().Trim()
             Dim lengthDecimal = InchFracToDecimal(lengthFrac)
             Dim qty = partWS.Cell(row, qtyCol).GetValue(Of Integer)() ' Assuming quantities are in the third column
-            Dim material = partWS.Cell(row, materialCol).GetString().Trim().ToUpper() ' Assuming material types are in the fourth column
-            If uniqueMaterials.Contains(material) = False Then 'add to unique materials list
-                uniqueMaterials.Add(material)
-            End If
+            Dim partStock = partWS.Cell(row, materialCol).GetString().Trim().ToUpper() ' Assuming partStock types are in the fourth column            
 
-            Dim partItem As New partObject(partNumber, qty, lengthDecimal, material)
+            Dim partItem As New partObject(partNumber, qty, lengthDecimal, partStock)
 
             cw(partNumber, 1, 0)
-            cw(material & "*", 0, 1)
+            cw(partStock & "*", 0, 1)
 
             'find the stock that this part will be cut from 
             Dim stockUsed As stockObject = Nothing
             cw("Stock Check:", 0, 1)
             For Each stock As stockObject In stockList
                 cw(stock.Name.ToUpper & "*", 0, 1)
-                If stock.Name = material Then
+                If stock.Name = partStock Then
                     stockUsed = stock
                     Exit For
                 End If
             Next
 
-            If stockUsed Is Nothing Then 'throw an exception if the material isn't in the stocklist
+            If stockUsed Is Nothing Then 'throw an exception if the partStock isn't in the stocklist
                 Throw New Exception("The material used for this part was not fouond in the list of available stock")
             End If
 
-            'read in angle date and assign it to the part instance
+            'read in angle data and assign it to the part instance
             cw(stockUsed.Name, 0, 1)
             Dim angleRange As IXLRange = partWS.Range(partWS.Cell(row, 5), partWS.Cell(row, 8)) 'the range of cells containing angle information
             partItem = GetPartAngles(angleRange, stockUsed, partItem)
@@ -93,12 +90,12 @@ Module ReadData
             partList.Add(partItem)
         Next
 
-        Return (partList, uniqueMaterials)
+        Return partList
     End Function
 
     Private Function ReadStockList(ByRef workbook As XLWorkbook) As List(Of stockObject)
         Dim stockList As New List(Of stockObject)
-        Dim stockworksheet = workbook.Worksheet(2) ' Assuming the second worksheet is for material
+        Dim stockworksheet = workbook.Worksheet(2) ' Assuming the second worksheet is for partStock
         'Dim stockLastRow = stockworksheet.LastRowUsed().RowNumber()
         Dim stockLastRow = stockworksheet.LastRowUsed(options:=XLCellsUsedOptions.AllFormats).RowNumber()
         For row As Integer = 2 To stockLastRow
@@ -120,6 +117,7 @@ Module ReadData
             cw("Height: " & height, 0, 1)
             cw("Width: " & width, 0, 1)
             cw(type, 0, 1)
+
             If newStock.SubType IsNot Nothing Then
                 cw("Sub-type: " & newStock.SubType, 0, 2)
             End If
@@ -136,7 +134,7 @@ Module ReadData
             'search for a duplicate part in the unique part list
             For Each uniquePart As (Integer, partObject) In uniquePartList
                 If part.PartNumber = uniquePart.Item2.PartNumber And part.Length = uniquePart.Item2.Length And part.Stock = uniquePart.Item2.Stock Then
-                    'identical parts found with same length and material (probably a part used in different assemblies)
+                    'identical parts found with same length and partStock (probably a part used in different assemblies)
                     'assign the duplicate flag to the current part
                     part.DuplicateIdentical = True
                     partList(uniquePart.Item1).DuplicateIdentical = True 'assign the duplicate flag to the original part
@@ -149,7 +147,7 @@ Module ReadData
                     isDuplicate = True
                     Exit For
                 ElseIf part.PartNumber = uniquePart.Item2.PartNumber And part.Stock <> uniquePart.Item2.Stock Then
-                    'an identical part number with a different material was found (this is probably user error)
+                    'an identical part number with a different partStock was found (this is probably user error)
                     part.DuplicateDifMaterial = True
                     partList(uniquePart.Item1).DuplicateDifMaterial = True 'assign the duplicate flag to the original part
                     isDuplicate = True
@@ -172,6 +170,13 @@ Module ReadData
         Return partList
     End Function
 
+    ''' <summary>
+    ''' Retrieves the cut angles from the excel sheet and assigns them to the part object. It also determines the cut orientation based on the angles and partStock used.
+    ''' </summary>
+    ''' <param name="angleRange"></param>
+    ''' <param name="stockUsed"></param>
+    ''' <param name="partObj"></param>
+    ''' <returns></returns>
     Private Function GetPartAngles(ByRef angleRange As IXLRange, ByRef stockUsed As stockObject, ByRef partObj As partObject) As partObject
         Dim part As partObject = partObj
         'round angles to integers because we don't need decimal degrees (and because it's easier to work with)
@@ -187,7 +192,7 @@ Module ReadData
         End If
 
 #Region "determine cut orientation and angle"
-        'we need to determine which way the material needs to be place in the saw
+        'we need to determine which way the partStock needs to be place in the saw
         'this depends on if the angles are on the web or flange
         'angles in the flange columns would reflect an angle cut on the width plane (sitting on height side in saw)
         'angles in the web columns would reflect an angle cut on the height plane (sitting on width side in saw)
@@ -212,9 +217,12 @@ Module ReadData
         If (LWebAngle <> 0 Or RWebAngle <> 0) And (LFlangeAngle <> 0 Or RFlangeAngle <> 0) Then
             'you can't have angles on both planes for now we will just throw an error
             Throw New Exception(part.PartNumber & " has angles on multiple planes ")
-        ElseIf LWebAngle <> 0 Or RWebAngle <> 0 Then
+            Return part
+        End If
+
+        If LWebAngle <> 0 Or RWebAngle <> 0 Then
             If stockUsed.SubType = "ST" Then
-                'the material used is Square tube so cut orientation doesn't matter
+                'the partStock used is Square tube so cut orientation doesn't matter
                 part.End1Angle = LWebAngle
                 part.End2Angle = RWebAngle
                 cw("MATERIAL IS SQUARE TUBE -SO- CUT ORIENTATION = 0", 0, 1)
@@ -222,7 +230,7 @@ Module ReadData
                 cw("End 2 Angle = " & part.End2Angle, 0, 1)
 
             Else
-                'the width side of the material will be facing down
+                'the width side of the partStock will be facing down
                 part.CutOrientation = 1
                 part.End1Angle = LWebAngle
                 part.End2Angle = RWebAngle
@@ -233,14 +241,14 @@ Module ReadData
 
         ElseIf LFlangeAngle <> 0 Or RFlangeAngle <> 0 Then
             If stockUsed.SubType = "ST" Then
-                'the material used is Square tube so cut orientation doesn't matter
+                'the partStock used is Square tube so cut orientation doesn't matter
                 part.End1Angle = LFlangeAngle
                 part.End2Angle = RFlangeAngle
                 cw("MATERIAL IS SQUARE TUBE -SO- CUT ORIENTATION = 0", 0, 1)
                 cw("End 1 Angle = " & part.End1Angle, 0, 1)
                 cw("End 2 Angle = " & part.End2Angle, 0, 1)
             Else
-                'the height side of the material will be facing down
+                'the height side of the partStock will be facing down
                 part.CutOrientation = 2
                 part.End1Angle = LFlangeAngle
                 part.End2Angle = RFlangeAngle
@@ -250,10 +258,23 @@ Module ReadData
             End If
         End If
 
-#End Region
-
         Return part
     End Function
+#End Region
 
+    Private Function InchFracToDecimal(frac As String) As Double
+
+        If frac.Contains("/") = False Then
+            ' No fraction, just return the integer value           
+            Return CDbl(frac)
+        Else
+            Dim inchInt As Integer = CInt(frac.Split(" ")(0))
+            Dim inchFrac As String = frac.Split(" ")(1)
+            Dim numerator As Integer = CInt(inchFrac.Split("/")(0))
+            Dim denominator As Integer = CInt(inchFrac.Split("/")(1))
+            Dim inchDecimal As Double = inchInt + (numerator / denominator)
+            Return inchDecimal
+        End If
+    End Function
 
 End Module
