@@ -25,11 +25,10 @@ Module ReadData
                 '''Setup Stock List'''
                 stockList = ReadStockList(workbook)
 
-                ''setup the part list
-                Dim partData = ReadPartData(workbook, stockList)
+                ''setup the part list               
 
-                partList = partData.Item1
-                uniqueMaterialList = partData.Item2
+                partList = ReadPartData(workbook, stockList)
+
 
             End Using
         End Using
