@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports ClosedXML.Excel
+Imports System.IO
+''' <summary>
 ''' Represents a stick of material used in nesting
 ''' </summary>
 Public Class StickObject
@@ -10,6 +12,7 @@ Public Class StickObject
     Dim _id As Integer
     Dim _bladeWidth As Double
     Dim _orientation As Integer = 1
+    Dim _outputStartRow As Integer = 0
 
     Public Sub New(ByRef stock As stockObject, ByRef orientation As Integer, Optional ByRef bladeWidth As Double = 0.1875)
         _stock = stock
@@ -69,4 +72,7 @@ Public Class StickObject
         End If
     End Sub
 
+    Sub WriteOutputData(ws As IXLWorksheet, ByRef stickNumber As Integer)
+        Dim lastPageBreak
+    End Sub
 End Class

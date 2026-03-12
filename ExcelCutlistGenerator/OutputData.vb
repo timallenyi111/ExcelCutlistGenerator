@@ -66,6 +66,86 @@ Module OutputData
 
     End Sub
 
+    Sub WriteOutputAngleNest1(ByRef nestCollection As Collection, ByRef stockList As List(Of stockObject))
+        If File.Exists(Globals.outPath) Then
+            File.Delete(Globals.outPath)
+        End If
+
+        Using wb As New XLWorkbook()
+            Dim ws = wb.Worksheets.Add("CutSheet")
+            ws.PageSetup.VerticalDpi = 300 'set to 300 dpi
+            ws.Rows().Height = 20 ' set the height of all rows to 20 points
+            Dim lastPageBreak As Integer = 0
+            Dim currentRow As Integer = Nothing
+            For Each stock In stockList
+                Dim stickCount As Integer = 1
+
+                For Each stick As StickObject In nestCollection(stock.Name)("Orientation 1")
+                    If ws.LastRowUsed() Is Nothing Then
+                        'first entry
+                        currentRow = 1
+                    Else
+                        currentRow = ws.LastRowUsed().RowNumber() + 2 'leave a blank row between sticks
+                        lastPageBreak = CheckForPrintBreak(ws, currentRow, lastPageBreak, stick.PartList.Count) ' check if the next list will fit on the current page
+                    End If
+                    WriteStickOutput_AngleNest1(ws, stick, currentRow, stickCount)
+                    stickCount += 1
+                Next
+                For Each stick As StickObject In nestCollection(stock.Name)("Orientation 2")
+                    If ws.LastRowUsed() Is Nothing Then
+                        'first entry
+                        currentRow = 1
+                    Else
+                        currentRow = ws.LastRowUsed().RowNumber() + 2 'leave a blank row between sticks
+                        lastPageBreak = CheckForPrintBreak(ws, currentRow, lastPageBreak, stick.PartList.Count) ' check if the next list will fit on the current page
+                    End If
+                    WriteStickOutput_AngleNest1(ws, stick, currentRow, stickCount)
+                    stickCount += 1
+                Next
+            Next
+
+            ws.Columns("A:Z").AdjustToContents()
+            wb.SaveAs(Globals.outPath)
+
+        End Using
+
+        'open the new output file
+        Process.Start(New ProcessStartInfo With {
+            .FileName = Globals.outPath,
+            .UseShellExecute = True
+        })
+    End Sub
+
+    Private Sub WriteStickOutput_AngleNest1(ByRef ws As IXLWorksheet, ByRef stick As StickObject, ByRef currentRow As Integer, ByRef stickCount As Integer)
+        'write the header for the stick
+        ws.Cell(currentRow, 1).Value = stick.StockName
+        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
+        ws.Cell(currentRow, 2).Value = "Stick " & stickCount
+        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
+
+        currentRow += 1
+        ws.Cell(currentRow, 1).Value = "Orientation: "
+        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
+        ws.Cell(currentRow, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right
+        ws.Cell(currentRow, 2).Value = stick.Orientation
+        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
+        ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left
+
+        'move to the next row for data
+        currentRow += 1
+        'write the part data
+        For Each part As partObject In stick.PartList
+            InsertPartRow(ws, currentRow, part)
+            currentRow += 1
+        Next
+
+        ws.Cell(currentRow, 1).Value = "Drop(in):"
+        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
+        ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
+        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
+
+    End Sub
+
     ''' <summary>
     ''' Checks if the next set of parts will fit on the current page. If not, adds a page break.
     ''' </summary>
@@ -154,7 +234,7 @@ Module OutputData
                 Next
                 Console.WriteLine("Remaining Length (inches): " & stick.RemainingStockLengthInches)
                 Console.WriteLine(vbCrLf)
-                stickCount += 1
+                'stickCount
             Next
         Next
 

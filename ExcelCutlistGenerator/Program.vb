@@ -32,10 +32,13 @@ Module Program
 
         'generate the nest list                
         'Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList) 'list of nests, each nest is a list of sticks     
-        CreateAngleNest1(partList, stockList)
+        Dim nestCollection As Collection = CreateAngleNest1(partList, stockList)
 
         If enableOutput Then
-            'WriteOutputNewFile(nestList)
+            'WriteOutputNewFile(nestCollection, stockList)
+            WriteOutputAngleNest1(nestCollection, stockList)
+            'delete the existing output file if it exists
+
         Else
             'don't write data to a new file to prevent having 
             cw("OUTPUT FILE DISABLED FOR DEBUGGING", 1, 0)

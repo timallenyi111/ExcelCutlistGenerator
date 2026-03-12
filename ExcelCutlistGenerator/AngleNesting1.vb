@@ -1,6 +1,15 @@
-﻿Module AngleNesting1
+﻿Imports System.IO
+Imports ClosedXML.Excel
+Imports DocumentFormat.OpenXml.Spreadsheet
 
-    Sub CreateAngleNest1(ByRef partList As List(Of partObject), ByRef stockList As List(Of stockObject))
+Module AngleNesting1
+    ''' <summary>
+    ''' Performs the angle nesting algorithm #1
+    ''' </summary>
+    ''' <param name="partList"></param>
+    ''' <param name="stockList"></param>
+    ''' <returns>Collection indexed by stock name of Collections indexed by "Orientation 1" and "Orientation 2 of List(of stickObjects)"</returns>
+    Public Function CreateAngleNest1(ByRef partList As List(Of partObject), ByRef stockList As List(Of stockObject)) As Collection
         ''''''''''''''''
         'strategy:
         'sort parts into lists by stock and cut orientation in order from longest to shortest
@@ -40,8 +49,9 @@
 
         PrintSummaryOfNests(nestCollection, stockList)
 
+        Return nestCollection
+    End Function
 
-    End Sub
 
     ''' <summary>
     ''' Returns a collection of lists of lists, sorted first by stock type, then by cut orientation, then by length (longest to shortest). 
