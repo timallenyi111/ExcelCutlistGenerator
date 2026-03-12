@@ -15,8 +15,10 @@
         _type = type
         _height = height
         _width = width
-        If type = "HSS" & height = width Then
-            _subType = "ST"
+        If _type = "HSS" And height = width Then
+            _subType = "SQ"
+        ElseIf _type = "L" And height = width Then
+            _subType = "EQ"
         End If
     End Sub
 
@@ -61,5 +63,16 @@
             Return _width
         End Get
     End Property
+
+    Sub PrintSummary()
+        cw(vbCrLf & "Stock Name: " & _name, 1, 0)
+        cw("Length: " & _lengthInches, 0, 1)
+        cw("Type: " & _type & ".", 0, 1)
+        cw("Height: " & _height, 0, 1)
+        cw("Width: " & _width, 0, 1)
+        If _subType IsNot Nothing Then
+            cw("Sub-type: " & _subType, 0, 2)
+        End If
+    End Sub
 
 End Class

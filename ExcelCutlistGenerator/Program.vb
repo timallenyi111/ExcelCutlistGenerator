@@ -71,7 +71,7 @@ Module Program
 
             'sort the parts by length (longest to shortest) and matching material type
             For Each part As partObject In partList
-                If part.Stock = currentStock.Name Then
+                If part.Stock.Name = currentStock.Name Then
                     If sortedPartsList.Count = 0 Then
                         sortedPartsList.Add(part)
                     Else

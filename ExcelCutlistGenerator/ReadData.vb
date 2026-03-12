@@ -11,7 +11,7 @@ Module ReadData
     ''' </summary>
     ''' <returns>
     ''' <param name="partList"></param>Item 1: a list of all parts from excel sheet |
-    ''' <param name="uniqueMaterialList"></param>Item 2: a list of every different partStock used |
+    ''' <param name="uniqueMaterialList"></param>Item 2: a list of every different partStockName used |
     ''' <param name="stockList"></param>Item 3: a list of available stock 
     ''' </returns>
     Function ReadExcelData() As (List(Of partObject), List(Of String), List(Of stockObject))
@@ -24,12 +24,10 @@ Module ReadData
             Using workbook = New XLWorkbook(fs)
                 '''Setup Stock List'''
                 stockList = ReadStockList(workbook)
-
+                cw("Number Of Stock Types: " & stockList.Count, 1, 0)
                 ''setup the part list               
 
                 partList = ReadPartData(workbook, stockList)
-
-
             End Using
         End Using
 
@@ -49,41 +47,50 @@ Module ReadData
 
         'these values have been modified to work with the AS partlist directly
         Dim partNumCol = 1
+        Dim lenCol = 2
         Dim materialCol = 4
         Dim qtyCol = 3
-        Dim lenCol = 2
+        Dim LWebAngleCol = 5
+        Dim RWebAngleCol = 6
+        Dim LFlangeAngleCol = 7
+        Dim RFlangeAngleCol = 8
 
         For row As Integer = 2 To partLastRow ' Assuming the first row is headers
             Dim partNumber = partWS.Cell(row, partNumCol).GetString().Trim()
             Dim lengthFrac = partWS.Cell(row, lenCol).GetString().Trim()
             Dim lengthDecimal = InchFracToDecimal(lengthFrac)
             Dim qty = partWS.Cell(row, qtyCol).GetValue(Of Integer)() ' Assuming quantities are in the third column
-            Dim partStock = partWS.Cell(row, materialCol).GetString().Trim().ToUpper() ' Assuming partStock types are in the fourth column            
-
-            Dim partItem As New partObject(partNumber, qty, lengthDecimal, partStock)
-
-            cw(partNumber, 1, 0)
-            cw(partStock & "*", 0, 1)
+            Dim partStockName = partWS.Cell(row, materialCol).GetString().Trim().ToUpper() ' Assuming partStockName types are in the fourth column            
 
             'find the stock that this part will be cut from 
             Dim stockUsed As stockObject = Nothing
-            cw("Stock Check:", 0, 1)
+            'cw("Stock Check:", 0, 1)
             For Each stock As stockObject In stockList
-                cw(stock.Name.ToUpper & "*", 0, 1)
-                If stock.Name = partStock Then
+                'cw(stock.Name.ToUpper & "*", 0, 1)
+                If stock.Name = partStockName Then
                     stockUsed = stock
                     Exit For
                 End If
             Next
 
-            If stockUsed Is Nothing Then 'throw an exception if the partStock isn't in the stocklist
-                Throw New Exception("The material used for this part was not fouond in the list of available stock")
+            If stockUsed Is Nothing Then 'throw an exception if the partStockName isn't in the stocklist
+                Throw New Exception("Part Number: " & partNumber & "is looking for stock: " & partStockName & "but it could not be found")
             End If
 
+            Dim partItem As New partObject(partNumber, qty, lengthDecimal, stockUsed)
+
+            'cw(partNumber, 1, 0)
+            'cw(partStockName & "*", 0, 1)
+            'cw(stockUsed.Name, 0, 1)
+
             'read in angle data and assign it to the part instance
-            cw(stockUsed.Name, 0, 1)
-            Dim angleRange As IXLRange = partWS.Range(partWS.Cell(row, 5), partWS.Cell(row, 8)) 'the range of cells containing angle information
-            partItem = GetPartAngles(angleRange, stockUsed, partItem)
+            Dim LWebAngle As Integer = CInt(Math.Round(partWS.Cell(row, LWebAngleCol).GetValue(Of Double)()))
+            Dim RWebAngle As Integer = CInt(Math.Round(partWS.Cell(row, RWebAngleCol).GetValue(Of Double)()))
+            Dim LFlangeAngle As Integer = CInt(Math.Round(partWS.Cell(row, LFlangeAngleCol).GetValue(Of Double)()))
+            Dim RFlangeAngle As Integer = CInt(Math.Round(partWS.Cell(row, RFlangeAngleCol).GetValue(Of Double)()))
+            partItem.SetCutAngleAndOrientation(LWebAngle, RWebAngle, LFlangeAngle, RFlangeAngle)
+
+            partItem.PrintSummary()
 
             'add the part to the part list and move on to the next row
             partList.Add(partItem)
@@ -94,7 +101,7 @@ Module ReadData
 
     Private Function ReadStockList(ByRef workbook As XLWorkbook) As List(Of stockObject)
         Dim stockList As New List(Of stockObject)
-        Dim stockworksheet = workbook.Worksheet(2) ' Assuming the second worksheet is for partStock
+        Dim stockworksheet = workbook.Worksheet(2) ' Assuming the second worksheet is for partStockName
         'Dim stockLastRow = stockworksheet.LastRowUsed().RowNumber()
         Dim stockLastRow = stockworksheet.LastRowUsed(options:=XLCellsUsedOptions.AllFormats).RowNumber()
         For row As Integer = 2 To stockLastRow
@@ -110,16 +117,9 @@ Module ReadData
 
             Dim newStock As New stockObject(stockName, stockLength, type, height, width)
 
+            newStock.PrintSummary()
+
             stockList.Add(newStock)
-
-            cw("Stock: " & stockName, 1)
-            cw("Height: " & height, 0, 1)
-            cw("Width: " & width, 0, 1)
-            cw(type, 0, 1)
-
-            If newStock.SubType IsNot Nothing Then
-                cw("Sub-type: " & newStock.SubType, 0, 2)
-            End If
         Next
 
         Return stockList
@@ -132,8 +132,8 @@ Module ReadData
             Dim isDuplicate As Boolean = False
             'search for a duplicate part in the unique part list
             For Each uniquePart As (Integer, partObject) In uniquePartList
-                If part.PartNumber = uniquePart.Item2.PartNumber And part.Length = uniquePart.Item2.Length And part.Stock = uniquePart.Item2.Stock Then
-                    'identical parts found with same length and partStock (probably a part used in different assemblies)
+                If part.PartNumber = uniquePart.Item2.PartNumber And part.Length = uniquePart.Item2.Length And part.Stock.Name = uniquePart.Item2.Stock.Name Then
+                    'identical parts found with same length and partStockName (probably a part used in different assemblies)
                     'assign the duplicate flag to the current part
                     part.DuplicateIdentical = True
                     partList(uniquePart.Item1).DuplicateIdentical = True 'assign the duplicate flag to the original part
@@ -145,8 +145,8 @@ Module ReadData
                     partList(uniquePart.Item1).DuplicateDifLength = True 'assign the duplicate flag to the original part
                     isDuplicate = True
                     Exit For
-                ElseIf part.PartNumber = uniquePart.Item2.PartNumber And part.Stock <> uniquePart.Item2.Stock Then
-                    'an identical part number with a different partStock was found (this is probably user error)
+                ElseIf part.PartNumber = uniquePart.Item2.PartNumber And part.Stock.Name <> uniquePart.Item2.Stock.Name Then
+                    'an identical part number with a different partStockName was found (this is probably user error)
                     part.DuplicateDifMaterial = True
                     partList(uniquePart.Item1).DuplicateDifMaterial = True 'assign the duplicate flag to the original part
                     isDuplicate = True
@@ -168,98 +168,6 @@ Module ReadData
         'return part list with adjusted duplicate flags
         Return partList
     End Function
-
-    ''' <summary>
-    ''' Retrieves the cut angles from the excel sheet and assigns them to the part object. It also determines the cut orientation based on the angles and partStock used.
-    ''' </summary>
-    ''' <param name="angleRange"></param>
-    ''' <param name="stockUsed"></param>
-    ''' <param name="partObj"></param>
-    ''' <returns></returns>
-    Private Function GetPartAngles(ByRef angleRange As IXLRange, ByRef stockUsed As stockObject, ByRef partObj As partObject) As partObject
-        Dim part As partObject = partObj
-        'round angles to integers because we don't need decimal degrees (and because it's easier to work with)
-        Dim LWebAngle As Integer = CInt(Math.Round(angleRange.Cell(1, 1).GetValue(Of Double)()))
-        Dim RWebAngle As Integer = CInt(Math.Round(angleRange.Cell(1, 2).GetValue(Of Double)()))
-        Dim LFlangeAngle As Integer = CInt(Math.Round(angleRange.Cell(1, 3).GetValue(Of Double)()))
-        Dim RFlangeAngle As Integer = CInt(Math.Round(angleRange.Cell(1, 4).GetValue(Of Double)()))
-
-        'all angles are 0 so no need to run the res
-        If LWebAngle = 0 And RWebAngle = 0 And LFlangeAngle = 0 And RFlangeAngle = 0 Then
-            cw("No Angles, Cut Orientation = 0", 0, 1)
-            Return part
-        End If
-
-#Region "determine cut orientation and angle"
-        'we need to determine which way the partStock needs to be place in the saw
-        'this depends on if the angles are on the web or flange
-        'angles in the flange columns would reflect an angle cut on the width plane (sitting on height side in saw)
-        'angles in the web columns would reflect an angle cut on the height plane (sitting on width side in saw)
-
-        'to address this the part is given a cut orientation
-        '0 = either height or width side down 
-        '1 = width side down in the saw
-        '2 = height side down in the saw
-        '0 is the default but won't be used here (except for ST) because we know the part has an angle 
-
-        'example: a wide flange beam has an angle in the flange column, the stock would be sitting on it's "side" in the saw
-        '         this beam would have a cut orienation of 2
-        '  ***         ***
-        '  * *         * *
-        '  * *********** *
-        '  * *********** *
-        '  * *         * *
-        '  ***         ***
-        '---------------------
-
-
-        If (LWebAngle <> 0 Or RWebAngle <> 0) And (LFlangeAngle <> 0 Or RFlangeAngle <> 0) Then
-            'you can't have angles on both planes for now we will just throw an error
-            Throw New Exception(part.PartNumber & " has angles on multiple planes ")
-            Return part
-        End If
-
-        If LWebAngle <> 0 Or RWebAngle <> 0 Then
-            If stockUsed.SubType = "ST" Then
-                'the partStock used is Square tube so cut orientation doesn't matter
-                part.End1Angle = LWebAngle
-                part.End2Angle = RWebAngle
-                cw("MATERIAL IS SQUARE TUBE -SO- CUT ORIENTATION = 0", 0, 1)
-                cw("End 1 Angle = " & part.End1Angle, 0, 1)
-                cw("End 2 Angle = " & part.End2Angle, 0, 1)
-
-            Else
-                'the width side of the partStock will be facing down
-                part.CutOrientation = 1
-                part.End1Angle = LWebAngle
-                part.End2Angle = RWebAngle
-                cw("CUT ORIENTATION = " & part.CutOrientation, 0, 1)
-                cw("End 1 Angle = " & part.End1Angle, 0, 1)
-                cw("End 2 Angle = " & part.End2Angle, 0, 1)
-            End If
-
-        ElseIf LFlangeAngle <> 0 Or RFlangeAngle <> 0 Then
-            If stockUsed.SubType = "ST" Then
-                'the partStock used is Square tube so cut orientation doesn't matter
-                part.End1Angle = LFlangeAngle
-                part.End2Angle = RFlangeAngle
-                cw("MATERIAL IS SQUARE TUBE -SO- CUT ORIENTATION = 0", 0, 1)
-                cw("End 1 Angle = " & part.End1Angle, 0, 1)
-                cw("End 2 Angle = " & part.End2Angle, 0, 1)
-            Else
-                'the height side of the partStock will be facing down
-                part.CutOrientation = 2
-                part.End1Angle = LFlangeAngle
-                part.End2Angle = RFlangeAngle
-                cw("CUT ORIENTATION = " & part.CutOrientation, 0, 1)
-                cw("End 1 Angle = " & part.End1Angle, 0, 1)
-                cw("End 2 Angle = " & part.End2Angle, 0, 1)
-            End If
-        End If
-
-        Return part
-    End Function
-#End Region
 
     Private Function InchFracToDecimal(frac As String) As Double
 
