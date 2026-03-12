@@ -30,18 +30,18 @@ Module Program
 
         cw("Generating Cutlist Nests...", 1)
 
-        'generate the nest list
-        'Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList, uniqueMaterialsList) 'list of nests, each nest is a list of sticks        
-        Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList) 'list of nests, each nest is a list of sticks     
+        'generate the nest list                
+        'Dim nestList As List(Of List(Of StickObject)) = LegacyNesting(partList, stockList) 'list of nests, each nest is a list of sticks     
+        CreateAngleNest1(partList, stockList)
 
         If enableOutput Then
-            WriteOutputNewFile(nestList)
+            'WriteOutputNewFile(nestList)
         Else
             'don't write data to a new file to prevent having 
             cw("OUTPUT FILE DISABLED FOR DEBUGGING", 1, 0)
             cw("Change enableOutput to True in global parameters")
 
-            WriteNestToConsole(nestList)
+            'WriteNestToConsole(nestList)
         End If
 
         cw("Nesting Complete.")
@@ -89,7 +89,7 @@ Module Program
             Next
 
             'add the first stick to the sticklist
-            stickList.Add(New StickObject(currentStock, 1))
+            stickList.Add(New StickObject(currentStock, 1, 1))
 
             'nesting algorithm
             For Each part As partObject In sortedPartsList
@@ -115,7 +115,7 @@ Module Program
                         'add one here and add the part to it
                         'add another stick and try again
                         Dim newStickID = stickList.Count + 1
-                        stickList.Add(New StickObject(currentStock, newStickID))
+                        stickList.Add(New StickObject(currentStock, newStickID, 1))
                         'get the stick that we just added to the list and add the current part to it
                         Dim addedStick As StickObject = stickList(newStickID - 1)
                         addedStick.AddPart(part)

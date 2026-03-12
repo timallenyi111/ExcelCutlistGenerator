@@ -83,6 +83,13 @@ Module ReadData
             'cw(partStockName & "*", 0, 1)
             'cw(stockUsed.Name, 0, 1)
 
+            'if any of the angle cells are blank put a 0 in them to prevent errors when converting to integers
+            For col As Integer = LWebAngleCol To RFlangeAngleCol
+                If partWS.Cell(row, col).IsEmpty() Then
+                    partWS.Cell(row, col).Value = 0
+                End If
+            Next
+
             'read in angle data and assign it to the part instance
             Dim LWebAngle As Integer = CInt(Math.Round(partWS.Cell(row, LWebAngleCol).GetValue(Of Double)()))
             Dim RWebAngle As Integer = CInt(Math.Round(partWS.Cell(row, RWebAngleCol).GetValue(Of Double)()))
@@ -90,7 +97,7 @@ Module ReadData
             Dim RFlangeAngle As Integer = CInt(Math.Round(partWS.Cell(row, RFlangeAngleCol).GetValue(Of Double)()))
             partItem.SetCutAngleAndOrientation(LWebAngle, RWebAngle, LFlangeAngle, RFlangeAngle)
 
-            partItem.PrintSummary()
+            'partItem.PrintSummary()
 
             'add the part to the part list and move on to the next row
             partList.Add(partItem)
@@ -117,7 +124,7 @@ Module ReadData
 
             Dim newStock As New stockObject(stockName, stockLength, type, height, width)
 
-            newStock.PrintSummary()
+            'newStock.PrintSummary()
 
             stockList.Add(newStock)
         Next

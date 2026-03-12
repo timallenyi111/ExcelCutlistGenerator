@@ -9,14 +9,15 @@ Public Class StickObject
     Dim _partList As New List(Of partObject)
     Dim _id As Integer
     Dim _bladeWidth As Double
+    Dim _orientation As Integer = 1
 
-    Public Sub New(ByRef stock As stockObject, ByRef id As Integer, Optional ByRef bladeWidth As Double = 0.1875)
+    Public Sub New(ByRef stock As stockObject, ByRef orientation As Integer, Optional ByRef bladeWidth As Double = 0.1875)
         _stock = stock
         _stockName = stock.Name
         _stockLengthInches = stock.LengthInches
         _remainingStockLengthInches = stock.LengthInches
-        _id = id
         _bladeWidth = bladeWidth
+        _orientation = orientation
     End Sub
 
     ReadOnly Property StockName As String
@@ -43,9 +44,15 @@ Public Class StickObject
         End Get
     End Property
 
-    ReadOnly Property ID As Integer
+    'ReadOnly Property ID As Integer
+    '    Get
+    '        Return _id
+    '    End Get
+    'End Property
+
+    ReadOnly Property Orientation As Integer
         Get
-            Return _id
+            Return _orientation
         End Get
     End Property
 

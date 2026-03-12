@@ -16,7 +16,7 @@ Module OutputData
             Dim lastPageBreak As Integer = 0
             For Each nest As List(Of StickObject) In nestList
                 Dim currentRow As Integer = Nothing
-
+                Dim stickCount As Integer = 1
                 For Each stick As StickObject In nest
                     Dim currentMaterial As String = stick.StockName
 
@@ -30,7 +30,7 @@ Module OutputData
                     'write the header for the stick
                     ws.Cell(currentRow, 1).Value = currentMaterial
                     FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
-                    ws.Cell(currentRow, 2).Value = "Stick " & stick.ID
+                    ws.Cell(currentRow, 2).Value = "Stick " & stickCount
                     FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
 
                     'move to the next row for data
@@ -46,7 +46,7 @@ Module OutputData
                     ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
                     FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
                     currentRow += 1
-
+                    stickCount += 1
                 Next
             Next
 
@@ -146,13 +146,15 @@ Module OutputData
 
     Sub WriteNestToConsole(ByRef nestList As List(Of List(Of StickObject)))
         For Each nest As List(Of StickObject) In nestList
+            Dim stickCount As Integer = 1
             For Each stick As StickObject In nest
-                Console.WriteLine("Material: " & stick.StockName & " Stick ID: " & stick.ID & ":")
+                Console.WriteLine("Material: " & stick.StockName & " Stick ID: " & stickCount & ":")
                 For Each part As partObject In stick.PartList
                     Console.WriteLine(" - Part Number: " & part.PartNumber)
                 Next
                 Console.WriteLine("Remaining Length (inches): " & stick.RemainingStockLengthInches)
                 Console.WriteLine(vbCrLf)
+                stickCount += 1
             Next
         Next
 
