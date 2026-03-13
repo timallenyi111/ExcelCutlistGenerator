@@ -52,7 +52,6 @@ Module AngleNesting1
         Return nestCollection
     End Function
 
-
     ''' <summary>
     ''' Returns a collection of lists of lists, sorted first by stock type, then by cut orientation, then by length (longest to shortest). 
     ''' The collection is indexed by stock name, and the lists of lists are indexed by cut orientation.
@@ -112,19 +111,6 @@ Module AngleNesting1
         Next
         Return sortedList
     End Function
-
-    Private Sub PrintSummaryOfSortedParts(ByRef sortedParts As Collection, ByRef stockList As List(Of stockObject))
-        For Each stock As stockObject In stockList
-            Dim orientedList As List(Of List(Of partObject)) = sortedParts(stock.Name)
-            For orientation As Integer = 0 To 2
-                Dim parts As List(Of partObject) = orientedList(orientation)
-                cw(stock.Name & " Orientation " & orientation & ":", 1, 0)
-                For Each part As partObject In parts
-                    cw(part.PartNumber, 0, 1)
-                Next
-            Next
-        Next
-    End Sub
 
     ''' <summary>
     ''' For nesting parts with orientation 1 and 2,
@@ -258,4 +244,18 @@ Module AngleNesting1
         Next
 
     End Sub
+
+    Private Sub PrintSummaryOfSortedParts(ByRef sortedParts As Collection, ByRef stockList As List(Of stockObject))
+        For Each stock As stockObject In stockList
+            Dim orientedList As List(Of List(Of partObject)) = sortedParts(stock.Name)
+            For orientation As Integer = 0 To 2
+                Dim parts As List(Of partObject) = orientedList(orientation)
+                cw(stock.Name & " Orientation " & orientation & ":", 1, 0)
+                For Each part As partObject In parts
+                    cw(part.PartNumber, 0, 1)
+                Next
+            Next
+        Next
+    End Sub
+
 End Module

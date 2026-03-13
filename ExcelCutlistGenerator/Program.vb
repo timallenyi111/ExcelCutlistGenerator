@@ -35,17 +35,17 @@ Module Program
         Dim nestCollection As Collection = CreateAngleNest1(partList, stockList)
 
         If enableOutput Then
-            'WriteOutputNewFile(nestCollection, stockList)
             WriteOutputAngleNest1(nestCollection, stockList)
-            'delete the existing output file if it exists
-
         Else
             'don't write data to a new file to prevent having 
             cw("OUTPUT FILE DISABLED FOR DEBUGGING", 1, 0)
             cw("Change enableOutput to True in global parameters")
-
+            PrintSawCode1(nestCollection, stockList)
             'WriteNestToConsole(nestList)
+
         End If
+
+        'SawCodeOutput1.PrintSawCode1()
 
         cw("Nesting Complete.")
         cw("Press any key to exit.")

@@ -77,29 +77,36 @@ Module OutputData
             ws.Rows().Height = 20 ' set the height of all rows to 20 points
             Dim lastPageBreak As Integer = 0
             Dim currentRow As Integer = Nothing
+            Dim stickStartRow As Integer = Nothing
             For Each stock In stockList
                 Dim stickCount As Integer = 1
-
                 For Each stick As StickObject In nestCollection(stock.Name)("Orientation 1")
                     If ws.LastRowUsed() Is Nothing Then
                         'first entry
                         currentRow = 1
+                        stickStartRow = currentRow
                     Else
                         currentRow = ws.LastRowUsed().RowNumber() + 2 'leave a blank row between sticks
+                        stickStartRow = currentRow
                         lastPageBreak = CheckForPrintBreak(ws, currentRow, lastPageBreak, stick.PartList.Count) ' check if the next list will fit on the current page
                     End If
+                    stick.OutputStartRow = currentRow
                     WriteStickOutput_AngleNest1(ws, stick, currentRow, stickCount)
+                    StickSawCode1ToXL(nestCollection, stockList, stickStartRow, stick, ws)
                     stickCount += 1
                 Next
                 For Each stick As StickObject In nestCollection(stock.Name)("Orientation 2")
                     If ws.LastRowUsed() Is Nothing Then
                         'first entry
                         currentRow = 1
+                        stickStartRow = currentRow
                     Else
                         currentRow = ws.LastRowUsed().RowNumber() + 2 'leave a blank row between sticks
+                        stickStartRow = currentRow
                         lastPageBreak = CheckForPrintBreak(ws, currentRow, lastPageBreak, stick.PartList.Count) ' check if the next list will fit on the current page
                     End If
                     WriteStickOutput_AngleNest1(ws, stick, currentRow, stickCount)
+                    StickSawCode1ToXL(nestCollection, stockList, stickStartRow, stick, ws)
                     stickCount += 1
                 Next
             Next
@@ -117,7 +124,9 @@ Module OutputData
     End Sub
 
     Private Sub WriteStickOutput_AngleNest1(ByRef ws As IXLWorksheet, ByRef stick As StickObject, ByRef currentRow As Integer, ByRef stickCount As Integer)
-        'write the header for the stick
+        'assign the first row of this stick to the stick object so that the code can start on the same line
+        stick.OutputStartRow = currentRow
+        'write the header for the stick        
         ws.Cell(currentRow, 1).Value = stick.StockName
         FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
         ws.Cell(currentRow, 2).Value = "Stick " & stickCount
@@ -143,7 +152,6 @@ Module OutputData
         FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
         ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
         FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
-
     End Sub
 
     ''' <summary>
@@ -186,7 +194,7 @@ Module OutputData
         Return lastPageBreak
     End Function
 
-    Private Sub FormatNestXLHeaderCell(ByVal ws As IXLWorksheet, ByRef cell As IXLCell)
+    Sub FormatNestXLHeaderCell(ByVal ws As IXLWorksheet, ByRef cell As IXLCell)
         cell.Style.Font.Bold = True
         cell.Style.Fill.BackgroundColor = XLColor.LightGray
         cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin

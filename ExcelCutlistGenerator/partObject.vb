@@ -1,6 +1,7 @@
 ﻿Public Class partObject
     Dim _partNumber As String
     Dim _qty As Integer
+    Dim _qtyOnStick As Integer = 0 'used for output to determine how many of the parts are being cut on the same stick
     Dim _length As Double
     Dim _partStock As stockObject
     Dim _remainingQty As Integer
@@ -12,6 +13,7 @@
     Dim _rAngle As Integer = 0
     Dim _cutOrientation As Integer = 0
     Dim _multiPlaneCut As Boolean = False
+
 
     Public Sub New(ByRef partNumber As String, ByRef qty As Integer, ByRef length As Double, ByRef stock As stockObject)
         _partNumber = partNumber
@@ -38,6 +40,41 @@
         End Get
     End Property
 
+    ''' <summary>
+    ''' Gets the "bottom length" that is needed for saw code based if the material is being cut in orientation 1 or 2
+    ''' </summary>
+    ''' <param name="cutOrientation"></param>
+    ''' <returns>Bottom cut length rounded to 2 decimal places</returns>
+    Public Function GetBottomLength(ByRef cutOrientation As Integer)
+        'The amount to be added to the cut length from the left angle x1 = height/tan(left angle)
+        Dim x1 As Double = 0
+        'The amount to be added to the cut length from the right angle x2 = -height/tan(right angle)
+        Dim x2 As Double = 0
+        If cutOrientation = 1 Then
+            'the material is being cut with tall side up
+            If LeftAngle <> 0 Then
+                x1 = Stock.Height / Math.Tan(((90 - LeftAngle) * Math.PI) / 180)
+            End If
+            If RightAngle <> 0 Then
+                x2 = -Stock.Height / Math.Tan(((90 - RightAngle) * Math.PI) / 180)
+            End If
+
+        ElseIf cutOrientation = 2 Then
+            'the material is being cut with the short side up
+            If LeftAngle <> 0 Then
+                x1 = Stock.Width / Math.Tan(((90 - LeftAngle) * Math.PI) / 180)
+            End If
+            If RightAngle <> 0 Then
+                x2 = -Stock.Width / Math.Tan(((90 - RightAngle) * Math.PI) / 180)
+            End If
+        Else
+            Throw New Exception("Cut Orientation: " & cutOrientation & "sent, but only material oreintations 1 and 2 are allowed")
+        End If
+        'round the bottom length to 3 decimal places
+        Dim _bottomLength As Double = Math.Round(Length + x1 + x2, 3)
+        Return _bottomLength
+    End Function
+
     ReadOnly Property Stock As stockObject
         Get
             Return _partStock
@@ -60,6 +97,27 @@
         Else
             Throw New Exception("Cannot reduce quantity below zero.")
         End If
+    End Sub
+
+    ReadOnly Property RemainingQtyOnStick As Integer
+        Get
+            Return _qtyOnStick
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' add to the quantity on stick by the value provided
+    ''' </summary>
+    ''' <param name="stick"></param>
+    Public Sub SetQtyOnStick(ByRef value As Integer)
+        _qtyOnStick += value
+    End Sub
+    ''' <summary>
+    ''' 'reduce the quantity of the part on the current stick that still needs to be cut by the specified amount.
+    ''' </summary>
+    ''' <param name="amount"></param>
+    Public Sub ReduceQtyOnStick(ByRef amount As Integer)
+        _qtyOnStick -= amount
     End Sub
 
     ReadOnly Property LeftAngle As Integer

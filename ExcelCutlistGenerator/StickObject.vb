@@ -12,7 +12,7 @@ Public Class StickObject
     Dim _id As Integer
     Dim _bladeWidth As Double
     Dim _orientation As Integer = 1
-    Dim _outputStartRow As Integer = 0
+    Dim _outputStartRow As Integer
 
     Public Sub New(ByRef stock As stockObject, ByRef orientation As Integer, Optional ByRef bladeWidth As Double = 0.1875)
         _stock = stock
@@ -72,7 +72,18 @@ Public Class StickObject
         End If
     End Sub
 
-    Sub WriteOutputData(ws As IXLWorksheet, ByRef stickNumber As Integer)
-        Dim lastPageBreak
-    End Sub
+    ''' <summary>
+    ''' Used to mark the starting row for outputting the stick's parts in the excel worksheet.
+    ''' This can be used to align saw output data with the top of the stick.
+    ''' </summary>
+    ''' <returns></returns>
+    Property OutputStartRow As Integer
+        Get
+            Return _outputStartRow
+        End Get
+        Set(value As Integer)
+            _outputStartRow = value
+        End Set
+    End Property
+
 End Class
