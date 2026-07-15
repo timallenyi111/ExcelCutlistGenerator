@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OLD Code\OldFunctions.vb" />
     <Compile Remove="OldFunctions.vb" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="OldFunctions.vb" />
+    <None Include="OLD Code\OldFunctions.vb" />
   </ItemGroup>
 
   <ItemGroup>

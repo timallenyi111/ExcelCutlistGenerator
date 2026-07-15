@@ -57,6 +57,12 @@ Module ReadData
 
         For row As Integer = 2 To partLastRow ' Assuming the first row is headers
             Dim partNumber = partWS.Cell(row, partNumCol).GetString().Trim()
+
+            If partNumber = "" Then
+                'the list is over but the equations in the cells give a false number of used rows
+                Exit For
+            End If
+
             Dim lengthFrac = partWS.Cell(row, lenCol).GetString().Trim()
             Dim lengthDecimal = InchFracToDecimal(lengthFrac)
             Dim qty = partWS.Cell(row, qtyCol).GetValue(Of Integer)() ' Assuming quantities are in the third column
@@ -179,7 +185,8 @@ Module ReadData
     Private Function InchFracToDecimal(frac As String) As Double
 
         If frac.Contains("/") = False Then
-            ' No fraction, just return the integer value           
+            ' No fraction, just return the integer value
+            Console.WriteLine("No fraction found in: " & frac)
             Return CDbl(frac)
         Else
             Dim inchInt As Integer = CInt(frac.Split(" ")(0))

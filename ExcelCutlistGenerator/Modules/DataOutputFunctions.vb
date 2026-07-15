@@ -1,7 +1,7 @@
 ﻿Imports ClosedXML.Excel
 Imports System.IO
 'Imports Excel = Microsoft.Office.Interop.Excel
-Module OutputData
+Module DataOutputFunctions
 
     Sub WriteOutputNewFile(ByRef nestList As List(Of List(Of StickObject)))
         'delete the existing output file if it exists
@@ -66,93 +66,7 @@ Module OutputData
 
     End Sub
 
-    Sub WriteOutputAngleNest1(ByRef nestCollection As Collection, ByRef stockList As List(Of stockObject))
-        If File.Exists(Globals.outPath) Then
-            File.Delete(Globals.outPath)
-        End If
 
-        Using wb As New XLWorkbook()
-            Dim ws = wb.Worksheets.Add("CutSheet")
-            ws.PageSetup.VerticalDpi = 300 'set to 300 dpi
-            ws.Rows().Height = 20 ' set the height of all rows to 20 points
-            Dim lastPageBreak As Integer = 0
-            Dim currentRow As Integer = Nothing
-            Dim stickStartRow As Integer = Nothing
-            For Each stock In stockList
-                Dim stickCount As Integer = 1
-                For Each stick As StickObject In nestCollection(stock.Name)("Orientation 1")
-                    If ws.LastRowUsed() Is Nothing Then
-                        'first entry
-                        currentRow = 1
-                        stickStartRow = currentRow
-                    Else
-                        currentRow = ws.LastRowUsed().RowNumber() + 2 'leave a blank row between sticks
-                        stickStartRow = currentRow
-                        lastPageBreak = CheckForPrintBreak(ws, currentRow, lastPageBreak, stick.PartList.Count) ' check if the next list will fit on the current page
-                    End If
-                    stick.OutputStartRow = currentRow
-                    WriteStickOutput_AngleNest1(ws, stick, currentRow, stickCount)
-                    StickSawCode1ToXL(nestCollection, stockList, stickStartRow, stick, ws)
-                    stickCount += 1
-                Next
-                For Each stick As StickObject In nestCollection(stock.Name)("Orientation 2")
-                    If ws.LastRowUsed() Is Nothing Then
-                        'first entry
-                        currentRow = 1
-                        stickStartRow = currentRow
-                    Else
-                        currentRow = ws.LastRowUsed().RowNumber() + 2 'leave a blank row between sticks
-                        stickStartRow = currentRow
-                        lastPageBreak = CheckForPrintBreak(ws, currentRow, lastPageBreak, stick.PartList.Count) ' check if the next list will fit on the current page
-                    End If
-                    WriteStickOutput_AngleNest1(ws, stick, currentRow, stickCount)
-                    StickSawCode1ToXL(nestCollection, stockList, stickStartRow, stick, ws)
-                    stickCount += 1
-                Next
-            Next
-
-            ws.Columns("A:Z").AdjustToContents()
-            wb.SaveAs(Globals.outPath)
-
-        End Using
-
-        'open the new output file
-        Process.Start(New ProcessStartInfo With {
-            .FileName = Globals.outPath,
-            .UseShellExecute = True
-        })
-    End Sub
-
-    Private Sub WriteStickOutput_AngleNest1(ByRef ws As IXLWorksheet, ByRef stick As StickObject, ByRef currentRow As Integer, ByRef stickCount As Integer)
-        'assign the first row of this stick to the stick object so that the code can start on the same line
-        stick.OutputStartRow = currentRow
-        'write the header for the stick        
-        ws.Cell(currentRow, 1).Value = stick.StockName
-        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
-        ws.Cell(currentRow, 2).Value = "Stick " & stickCount
-        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
-
-        currentRow += 1
-        ws.Cell(currentRow, 1).Value = "Orientation: "
-        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
-        ws.Cell(currentRow, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right
-        ws.Cell(currentRow, 2).Value = stick.Orientation
-        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
-        ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left
-
-        'move to the next row for data
-        currentRow += 1
-        'write the part data
-        For Each part As partObject In stick.PartList
-            InsertPartRow(ws, currentRow, part)
-            currentRow += 1
-        Next
-
-        ws.Cell(currentRow, 1).Value = "Drop(in):"
-        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 1))
-        ws.Cell(currentRow, 2).Value = stick.RemainingStockLengthInches
-        FormatNestXLHeaderCell(ws, ws.Cell(currentRow, 2))
-    End Sub
 
     ''' <summary>
     ''' Checks if the next set of parts will fit on the current page. If not, adds a page break.
@@ -162,7 +76,7 @@ Module OutputData
     ''' <param name="lastPageBreak"></param>
     ''' <param name="numParts"></param>
     ''' <returns></returns>
-    Private Function CheckForPrintBreak(ByRef ws As IXLWorksheet, ByRef currentRow As Integer, ByRef lastPageBreak As Integer, ByRef numParts As Integer) As Integer
+    Public Function CheckForPrintBreak(ByRef ws As IXLWorksheet, ByRef currentRow As Integer, ByRef lastPageBreak As Integer, ByRef numParts As Integer) As Integer
         Dim verticalDPI = ws.PageSetup.VerticalDpi
         Dim verticalPageMargin As Double = ws.PageSetup.Margins.Top + ws.PageSetup.Margins.Bottom
         Dim verticalPrintArea As Double = 11 - verticalPageMargin 'assuming standard 11.5 inch height for now       
@@ -194,14 +108,18 @@ Module OutputData
         Return lastPageBreak
     End Function
 
-    Sub FormatNestXLHeaderCell(ByVal ws As IXLWorksheet, ByRef cell As IXLCell)
+    Sub FormatNestXLHeaderCell(ByVal ws As IXLWorksheet, ByRef cell As IXLCell, Optional centered As Boolean = False)
         cell.Style.Font.Bold = True
         cell.Style.Fill.BackgroundColor = XLColor.LightGray
         cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin
         cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center
+
+        If centered Then
+            cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center
+        End If
     End Sub
 
-    Private Sub InsertPartRow(ByRef ws As IXLWorksheet, ByRef currentRow As Integer, ByRef part As partObject)
+    Public Sub InsertPartRow(ByRef ws As IXLWorksheet, ByRef currentRow As Integer, ByRef part As partObject)
 
         ws.Cell(currentRow, 1).Value = part.PartNumber
         ws.Cell(currentRow, 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin

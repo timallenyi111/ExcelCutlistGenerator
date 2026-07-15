@@ -45,26 +45,31 @@
     ''' </summary>
     ''' <param name="cutOrientation"></param>
     ''' <returns>Bottom cut length rounded to 2 decimal places</returns>
-    Public Function GetBottomLength(ByRef cutOrientation As Integer)
+    Public Function GetBottomLength(ByRef cutOrientation As Integer) As Double
+        'IF THE LENGTH FOR THE PART IS THE MAXIMUM LENGTH THEN NO ANGLE SHOULD BE ABLE TO ADD TO THE LENGTH
         'The amount to be added to the cut length from the left angle x1 = height/tan(left angle)
         Dim x1 As Double = 0
         'The amount to be added to the cut length from the right angle x2 = -height/tan(right angle)
         Dim x2 As Double = 0
         If cutOrientation = 1 Then
             'the material is being cut with tall side up
-            If LeftAngle <> 0 Then
+            'a positive angle would add to the length of the cut so we need to check for that and only add to the length if the angle is negative
+            If LeftAngle < 0 Then
                 x1 = Stock.Height / Math.Tan(((90 - LeftAngle) * Math.PI) / 180)
             End If
-            If RightAngle <> 0 Then
+            'a negative angle would add to the length of the cut so we need to check for that and only add to the length if the angle is positive
+            If RightAngle > 0 Then
                 x2 = -Stock.Height / Math.Tan(((90 - RightAngle) * Math.PI) / 180)
             End If
 
         ElseIf cutOrientation = 2 Then
             'the material is being cut with the short side up
-            If LeftAngle <> 0 Then
+            'a positive angle would add to the length of the cut so we need to check for that and only add to the length if the angle is negative
+            If LeftAngle < 0 Then
                 x1 = Stock.Width / Math.Tan(((90 - LeftAngle) * Math.PI) / 180)
             End If
-            If RightAngle <> 0 Then
+            'a negative angle would add to the length of the cut so we need to check for that and only add to the length if the angle is positive
+            If RightAngle > 0 Then
                 x2 = -Stock.Width / Math.Tan(((90 - RightAngle) * Math.PI) / 180)
             End If
         Else
@@ -75,6 +80,18 @@
         Return _bottomLength
     End Function
 
+    Public Function GetDropCutLength(ByRef cutOrientation As Integer, Optional additionalLength As Double = 0) As Double
+        Dim dropLength As Double
+        If cutOrientation = 1 Then
+            dropLength = Math.Round(additionalLength + Stock.Height / Math.Tan(((90 - RightAngle) * Math.PI) / 180), 3)
+        ElseIf cutOrientation = 2 Then
+            dropLength = Math.Round(additionalLength + Stock.Width / Math.Tan(((90 - RightAngle) * Math.PI) / 180), 3)
+        Else
+            Throw New Exception("Cut Orientation " & cutOrientation & " sent but only cut orientations 1 and 2 allowed")
+        End If
+
+        Return dropLength
+    End Function
     ReadOnly Property Stock As stockObject
         Get
             Return _partStock
@@ -109,7 +126,7 @@
     ''' add to the quantity on stick by the value provided
     ''' </summary>
     ''' <param name="stick"></param>
-    Public Sub SetQtyOnStick(ByRef value As Integer)
+    Public Sub AddQtyOnStick(ByRef value As Integer)
         _qtyOnStick += value
     End Sub
     ''' <summary>
@@ -289,7 +306,7 @@
                         'this would represent a cut on the long leg of an unequal leg angle
                         _cutOrientation = 1
                     End If
-                Case "W", "C", "S"
+                Case "W", "C", "S", "PIPE"
                     _cutOrientation = 1
                 Case Else
                     'stock types aren't supported so throw an error to alert the user to check the part stock type.
