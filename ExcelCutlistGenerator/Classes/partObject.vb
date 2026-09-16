@@ -21,6 +21,7 @@
         _remainingQty = qty
         _length = length
         _partStock = stock
+        Debug.WriteLine("Part Number: " + _partNumber.ToString() + " | qty: " + _qty.ToString())
     End Sub
     ReadOnly Property PartNumber As String
         Get

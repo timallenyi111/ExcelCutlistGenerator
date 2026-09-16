@@ -12,7 +12,7 @@ Module Program
         'used for debugging so I don't have to run the program through excel every time
         If debugMode Then
             'Globals.inPath = "C:\Users\TimAllen\source\repos\timallenyi111\ExcelCutlistGenerator\CutlistTestSheet_angleNest.xlsm"
-            Globals.inPath = "C:\Users\TimAllen\DC\ACCDocs\AR Erectors\Cullman Castings - HPC\Project Files\_Inventor\__Shop Drawings\CONTROL PANEL FRAME CUTLIST.xlsm"
+            Globals.inPath = "C:\Users\TimAllen\OneDrive - A & R Erectors, Inc\A&R Working Directory\Misc\Rehabilitation Hospital of Indiana\Cut Lists\W14x22.xlsm"
         Else
             Globals.inPath = args(0) ' get the input path from the command line arguments
         End If

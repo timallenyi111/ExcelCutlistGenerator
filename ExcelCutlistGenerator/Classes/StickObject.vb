@@ -64,11 +64,12 @@ Public Class StickObject
     ''' </summary>
     ''' <param name="part"></param>
     Public Sub AddPart(ByRef part As partObject)
+        'Debug.WriteLine("Part Length: " + part.Length.ToString() + " | Remaining Stock Length: " + _remainingStockLengthInches.ToString())
         If part.Length <= _remainingStockLengthInches Then
             _partList.Add(part)
             _remainingStockLengthInches -= part.Length + _bladeWidth 'account for blade width
         Else
-            Throw New Exception("Part length exceeds remaining stock length.")
+            Throw New Exception(part.PartNumber + " length exceeds remaining stock length.")
         End If
     End Sub
 

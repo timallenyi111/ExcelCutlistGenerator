@@ -142,7 +142,8 @@ Module AngleNesting1
 
                 For Each stick As StickObject In stickList
                     'add the part to any stick with enough remaining length
-                    If part.Length <= stick.RemainingStockLengthInches + Globals.bladeWidth Then
+                    'Debug.WriteLine("Part Length + Blade Width: " + (part.Length + Globals.bladeWidth).ToString() + " | Remaining Stock Length: " + stick.RemainingStockLengthInches.ToString())
+                    If part.Length + Globals.bladeWidth <= stick.RemainingStockLengthInches Then
                         stick.AddPart(part)
                         part.ReduceRemainingQty(1)
                         partNested = True
@@ -184,7 +185,7 @@ Module AngleNesting1
                 Dim partNested As Boolean = False
                 'try to fit the part in the drops from the orientation 1 sticks first
                 For Each stick As StickObject In stickList1
-                    If part.Length <= stick.RemainingStockLengthInches + Globals.bladeWidth Then
+                    If part.Length + Globals.bladeWidth <= stick.RemainingStockLengthInches Then
                         stick.AddPart(part)
                         part.ReduceRemainingQty(1)
                         partNested = True
@@ -194,7 +195,7 @@ Module AngleNesting1
                 'if the part was not nested in the orientation 1 sticks, try to fit it in the drops from the orientation 2 sticks
                 If partNested = False Then
                     For Each stick As StickObject In stickList2
-                        If part.Length <= stick.RemainingStockLengthInches + Globals.bladeWidth Then
+                        If part.Length + Globals.bladeWidth <= stick.RemainingStockLengthInches Then
                             stick.AddPart(part)
                             part.ReduceRemainingQty(1)
                             partNested = True
@@ -206,6 +207,7 @@ Module AngleNesting1
                 If partNested = False Then
                     Dim newStick As New StickObject(part.Stock, 1)
                     newStick.AddPart(part)
+                    part.ReduceRemainingQty(1)
                     stickList1.Add(newStick)
                 End If
             End While
